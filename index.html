@@ -8,121 +8,172 @@
 </head>
 <body>
 
-  <div class="stars" aria-hidden="true"></div>
-  <div class="robot bot2" aria-label="Робот 2"></div>
-  <div class="city-skyline">
-    <div class="building b1">
-      <div class="windows">
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-      </div>
-    </div>
-    <div class="building b2">
-      <div class="windows">
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-      </div>
-    </div>
-    <div class="building b3">
-      <div class="windows">
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-      </div>
-    </div>
-    <div class="building b4">
-      <div class="windows">
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-      </div>
-    </div>
-    <div class="building b5">
-      <div class="windows">
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-      </div>
-    </div>
-    <div class="building b6">
-      <div class="windows">
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-      </div>
-    </div>
-    <div class="building b7">
-      <div class="windows">
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-      </div>
-    </div>
-    <div class="building b8">
-      <div class="windows">
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-        <div></div><div></div>
-      </div>
-    </div>
-  </div>
+<button class="magic-button" onclick="changeBackground()">
+  🪄 Натисни для магії!
+</button>
 
-  <main class="container">
-    <h1>🤖 Привіт! Я Андрій</h1>
-    <p>Мені 13 років, я починаю вивчати програмування. Я мрію створювати нейромережі та працювати зі штучним інтелектом.</p>
+<img src="earth.png" alt="Земля" class="planet-earth" onclick="showAlien()">
+<div class="stars" aria-hidden="true"></div>
+<div class="robot bot2" aria-label="Робот 2"></div>
+<div class="city-skyline">
+  <div class="building b1"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+  <div class="building b2"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+  <div class="building b3"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+  <div class="building b4"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+  <div class="building b5"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+  <div class="building b6"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+  <div class="building b7"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+  <div class="building b8"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+</div>
 
+<div id="transformer-buttons"></div>
+
+<div class="life-timer-container">
+  <h2>Я живу вже:</h2>
+  <p id="lifeTimer">Завантаження...</p>
+</div>
+
+<!-- Вкладки -->
+<div class="tabs">
+  <button class="tab-button" onclick="openTab('about')">Про мене</button>
+  <button class="tab-button" onclick="openTab('hobby')">Хобі</button>
+  <button class="tab-button" onclick="openTab('goals')">Цілі</button>
+  <button class="tab-button" onclick="openTab('tools')">Інструменти</button>
+  <button class="tab-button" onclick="openTab('future')">Моє майбутнє</button>
+  <button class="tab-button" onclick="openTab('contact')">Мої досягнення</button>
+</div>
+
+<main class="container">
+  <section id="about" class="tab-content">
+    <h2>👨‍Про мене</h2>
+    <p>Мені 13 років, я починаю вивчати програмування. Мрію створювати нейромережі та працювати зі штучним інтелектом.</p>
+  </section>
+
+  <section id="hobby" class="tab-content">
+    <h2>🎮 Хобі</h2>
+    <p>Я люблю грати в ігри, пробую писати код, дивитися відео і створювати прості сайти.</p>
+  </section>
+
+  <section id="goals" class="tab-content">
+    <h2>🚀 Мої цілі</h2>
+    <p>Хочу стати професіоналом у галузі ІТ, створювати програми і вебсайти.</p>
+  </section>
+
+  <section id="tools" class="tab-content">
+    <h2>🛠️ Інструменти</h2>
+    <ul>
+      <li>Notion</li>
+      <li>GPT-чати</li>
+      <li>DeepSeek</li>
+      <li>GitHub</li>
+      <li>Slack</li>
+      <li>Visual Studio Code</li>
+      <li>Python</li>
+      <li>Jupyter Notebook</li>
+      <li>Командний рядок</li>
+    </ul>
+  </section>
+
+  <section id="future" class="tab-content">
+    <h2>🤖 Моє майбутнє через 10 років</h2>
+    <p>Через десятиліття я – досвідчений фронтенд-розробник, чиї сайти та веб-додатки змінюють цифровий ландшафт. Моя експертиза в HTML, CSS та JavaScript дозволила мені досягти вершин у створенні сучасних, інтуїтивних інтерфейсів, якими користуються мільйони.</p>
+
+    <p>Я спеціалізуюсь на розробці:</p>
+    <ul>
+      <li>Інтерактивних веб-додатків з використанням сучасних фреймворків</li>
+      <li>Адаптивних інтерфейсів для будь-яких пристроїв</li>
+      <li>Швидких і чистих рішень із структурованим кодом</li>
+    </ul>
+
+    <p>Щодня я:</p>
+    <ul>
+      <li>🔹 Пишу JavaScript-код на сучасному рівні</li>
+      <li>🔹 Створюю елегантні стилі з CSS</li>
+      <li>🔹 Оптимізую продуктивність сайтів</li>
+      <li>🔹 Вивчаю нові технології</li>
+    </ul>
+
+    <p>Моя робота — це мистецтво цифрових просторів. Моя мета — залишатися на передовій веб-технологій і творити щось прекрасне.</p>
+  </section>
+  <section id="contact" class="tab-content">
+    <h2>🏆 Мої досягнення</h2>
+    <p>Я створив свій перший сайт, навчився основам HTML і CSS, а також почав вивчати JavaScript. Моїм головним досягненням стало створення цього сайту.</p>
+    <p>Я також отримав досвід роботи з GitHub, де зберігаю свої проекти. Ще я трохи навчився використовувати командний рядок.</p>
+  </section>
+
+
+  <div style="text-align: center; margin-top: 40px;">
     <img src="bumblebee.png" alt="Бамблбі" class="robot-img">
-
     <button id="sayHiBtn" class="say-hi-btn">Сказати привіт</button>
+  </div>
+</main>
 
-    <section>
-      <h2>👦 Про мене</h2>
-      <p>Я живу в Україні, цікавлюся технологіями, люблю досліджувати нове, самостійно вивчаю HTML, CSS і JavaScript.</p>
-    </section>
+<script src="script.js"></script>
+<script>
+  setInterval(spawnSmartTransformer, 15000);
 
-    <section>
-      <h2>🎮 Хобі</h2>
-      <p>Я люблю грати в ігри, пробувати писати код, дивитися відео про штучний інтелект і створювати прості сайти.</p>
-    </section>
+  document.addEventListener("mousemove", (e) => {
+    const buttons = document.querySelectorAll(".transformer-btn");
+    buttons.forEach(button => {
+      let rect = button.getBoundingClientRect();
+      let centerX = rect.left + rect.width / 2;
+      let centerY = rect.top + rect.height / 2;
+      let distX = e.clientX - centerX;
+      let distY = e.clientY - centerY;
+      let distance = Math.sqrt(distX ** 2 + distY ** 2);
 
-    <section>
-      <h2>🚀 Мої цілі</h2>
-      <p>Хочу стати професіоналом у галузі ІТ, створювати штучний інтелект, створити свою першу програму і вебсайт.</p>
-    </section>
+      if (distance < 200) {
+        let dx = -distX / distance;
+        let dy = -distY / distance;
+        button.style.left = `${centerX + dx * 100}px`;
+        button.style.top = `${centerY + dy * 100}px`;
+      }
+    });
+  });
+</script>
+<script>
+  function updateLifeTimer() {
+    const birthDate = new Date("2011-09-29T00:00:00");
+    const now = new Date();
 
-    <section>
-      <h2>🛠️ Інструменти, які я використовую</h2>
-      <ul>
-        <li>Notion</li>
-        <li>GPT-чати</li>
-        <li>DeepSeek</li>
-        <li>GitHub</li>
-        <li>Slack</li>
-        <li>Visual Studio Code</li>
-        <li>Python</li>
-        <li>Jupyter Notebook</li>
-        <li>Командний рядок</li>
-      </ul>
-    </section>
-  </main>
-  <script src="script.js"></script>
+    // Отримуємо різницю в мілісекундах
+    let diff = now.getTime() - birthDate.getTime();
+
+    // Створюємо тимчасову дату з цією різницею
+    const lifeDate = new Date(diff);
+
+    // Рахуємо точні роки
+    let years = now.getFullYear() - birthDate.getFullYear();
+    let months = now.getMonth() - birthDate.getMonth();
+    let days = now.getDate() - birthDate.getDate();
+
+    // Коригуємо, якщо день народження ще не настав
+    if (now < new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate())) {
+      years--;
+      months += 12;
+    }
+
+    if (days < 0) {
+      months--;
+      const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate(); // днів у минулому місяці
+      days += prevMonth;
+    }
+
+    if (months < 0) {
+      months += 12;
+    }
+
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    document.getElementById("lifeTimer").innerText =
+      `${years} років, ${months} міс., ${days} днів, ${hours} год, ${minutes} хв, ${seconds} сек`;
+  }
+
+  setInterval(updateLifeTimer, 1000);
+  updateLifeTimer();
+</script>
+
 </body>
 </html>
