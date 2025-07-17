@@ -1,0 +1,553 @@
+/* Основні стилі */
+body, html { /* Встановлюємо стилі для всього документа */
+  margin: 0; /* Відміняємо зовнішні відступи */
+  padding: 0; /* Відміняємо внутрішні відступи */
+  height: 100%; /* Висота на весь екран */
+  font-family: 'Courier New', monospace; /* Шрифт */
+  font-weight: bold; /* Жирний шрифт */
+  background: #010f4b; /* Колір фону */
+  color: #ffffff; /* Колір тексту */
+  text-shadow: 0 0 10px #992424, 0 0 20px #b60505; /* Тінь тексту */
+  font-weight: bolder; /* Жирний шрифт */
+  font-style: bolder; /* Жирний курсив */
+}
+
+html, body {
+  height: 100%;
+  margin: -14px;
+  padding: -14px;
+}
+
+.magic-button {
+  background-color: #222;
+  color: #0ff;
+  border: 2px solid #0ff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px #0ff;
+  transition: all 0.3s ease;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+}
+
+.magic-button:hover {
+  background-color: #0ff;
+  color: #000;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #0ff;
+}
+
+.planet-earth {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 200px;
+  height: 200px;
+  z-index: 999;
+  animation: rotate-earth 20s linear infinite;
+}
+
+@keyframes rotate-earth {w
+  20% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Контейнер */
+.container { /* Основний блок-контейнер */
+  max-width: 900px; /* Максимальна ширина */
+  margin: 30px auto; /* Відступи зверху і знизу 60px, по центру */
+  padding: 20px; /* Внутрішній відступ */
+  background-color: #1a1a1a4f; /* Колір фону контейнера */
+  font-weight: bold; /* Жирний шрифт */
+  border: 2px solid #00ffe1; /* Рамка */
+  border-radius: 15px; /* Закруглені кути */
+  box-shadow: 0 0 25px #00ffe1; /* Тінь */
+  position: relative; /* Відносне позиціонування */
+  z-index: 1; /* Поверх інших елементів */
+  padding-bottom: 180px; /* Відступ знизу */
+}
+
+/* Заголовки */
+h1, h2 { /* Стилі для заголовків */
+  font-weight: bold; /* Жирний шрифт */
+  color: #000000; /* Колір тексту */
+  text-shadow: 0 0 8px #b60505; /* Тінь тексту */
+}
+
+/* Кнопка */
+.say-hi-btn { /* Стилі для кнопки */
+  display: block; /* Блочний елемент */
+  margin: 60px auto 90px auto; /* Відступи */
+  padding: 12px 32px; /* Внутрішні відступи */
+  font-size: 1.1em; /* Розмір шрифту */
+  background: linear-gradient(90deg, #00ffe1 0%, #b60505 100%); /* Градієнт */
+  color: #1a1a1a; /* Колір тексту */
+  border: none; /* Без рамки */
+  border-radius: 8px; /* Закруглені кути */
+  cursor: pointer; /* Курсор у вигляді руки */
+  box-shadow: 0 0 10px #00ffe1; /* Тінь */
+  transition: background 0.3s, color 0.3s, transform 0.2s; /* Анімація при наведенні */
+}
+.say-hi-btn:hover, .say-hi-btn:focus { /* При наведенні або фокусі */
+  background: linear-gradient(90deg, #b60505 0%, #00ffe1 100%); /* Інший градієнт */
+  color: #fff; /* Білий текст */
+  transform: scale(1.05); /* Збільшення */
+}
+
+/* Зображення робота */
+.robot-img { /* Стилі для картинки робота */
+  display: block; /* Блочний елемент */
+  margin: 60px auto; /* По центру */
+  width: 250px; /* Ширина */
+  animation: float 4s ease-in-out infinite, /* Анімація плавання */
+             rotate 10s linear infinite, /* Анімація обертання */
+             pulse 2s ease-in-out infinite, /* Анімація пульсації */
+             glow 1.5s ease-in-out infinite; /* Анімація світіння */
+  filter: drop-shadow(0 0 10px #c00303); /* Тінь */
+  transform-origin: center; /* Центр обертання */
+}
+
+/* Пункти списку */
+ul { /* Список */
+  padding-left: 20px; /* Відступ зліва */
+}
+ul li { /* Пункти списку */
+  margin: 5px 0; /* Відступи зверху і знизу */
+}
+
+/* 🌠 Зірки */
+.stars { /* Блок зірок */
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(#ffffff66 4px, transparent 4px),
+    radial-gradient(#fff 6px, transparent 6px),
+    radial-gradient(#fff8 10px, transparent 10px);
+  background-size: 90px 90px, 220px 220px, 340px 340px;
+  background-position: 0 0, 80px 120px, 200px 400px;
+  animation: twinkle 3s infinite, moveStars 60s linear infinite;
+  background-attachment: fixed; /* Додаємо, щоб фон займав весь екран */
+}
+.stars::before, .stars::after { /* Додаткові зірки */
+  content: "";
+  position: fixed; /* Було absolute, тепер fixed */
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+.stars::before { /* Великі зірки */
+  background:
+    radial-gradient(circle, #fff 10px, transparent 12px) 10vw 20vh,
+    radial-gradient(circle, #fff 8px, transparent 10px) 60vw 80vh,
+    radial-gradient(circle, #fff 12px, transparent 14px) 80vw 10vh,
+    radial-gradient(circle, #fff 6px, transparent 8px) 30vw 60vh,
+    radial-gradient(circle, #fff 10px, transparent 12px) 90vw 50vh,
+    radial-gradient(circle, #fff 8px, transparent 10px) 50vw 30vh;
+  background-repeat: no-repeat; /* Не повторювати */
+  animation: starBlink 4s infinite linear; /* Миготіння */
+}
+.stars::after { /* Додаткові зірки */
+  background:
+    radial-gradient(circle, #fff8 7px, transparent 9px) 20vw 10vh,
+    radial-gradient(circle, #fff8 5px, transparent 7px) 70vw 60vh,
+    radial-gradient(circle, #fff8 8px, transparent 10px) 40vw 90vh,
+    radial-gradient(circle, #fff8 6px, transparent 8px) 80vw 80vh;
+  background-repeat: no-repeat; /* Не повторювати */
+  animation: starBlink 6s infinite linear reverse; /* Миготіння у зворотньому напрямку */
+}
+
+@keyframes twinkle { /* Анімація мерехтіння */
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+@keyframes moveStars { /* Анімація руху зірок */
+  0% { background-position: 0 0, 80px 120px, 200px 400px; }
+  100% { background-position: 400px 400px, 240px 360px, 600px 1200px; }
+}
+@keyframes starBlink { /* Анімація миготіння */
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.transformer-btn {
+  position: fixed;
+  width: 100px;
+  height: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 999;
+  animation: pop 0.4s ease-out;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 🌆 Місто */
+.city-skyline { /* Контейнер для міста */
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* Будинки на задньому плані */
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  background: linear-gradient(to top, #0a0a0a 60%, transparent 100%);
+  overflow: visible;
+  gap: 32px; /* Збільшений відступ між будинками */
+}
+
+/* Будівлі займають всю ширину міста */
+.building {
+  position: relative;
+  background: #222;
+  border: 2px solid #00ffe1;
+  margin: 0; /* Відступи тепер через gap у .city-skyline */
+  border-radius: 2px 2px 0 0;
+  box-shadow: 0 0 10px #00ffe1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: visible;
+  flex: 1 1 0;
+  min-width: 0;
+  z-index: 0; /* Будинки на задньому плані */
+}
+
+/* Різні розміри для кожного будинку (збільшена висота, ширина автоматична) */
+.building.b1 { height: 320px; }
+.building.b2 { height: 420px; }
+.building.b3 { height: 370px; }
+.building.b4 { height: 520px; }
+.building.b5 { height: 360px; }
+.building.b6 { height: 480px; }
+.building.b7 { height: 340px; }
+.building.b8 { height: 540px; }
+
+/* Прямокутні вікна на будинках */
+.windows {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 80%;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 10px;
+  z-index: 2;
+}
+
+.windows div {
+  background: #ffe066;
+  border-radius: 3px;
+  box-shadow: 0 0 6px #ffe066, 0 0 2px #fffbe6;
+  width: 100%;
+  height: 80%;
+  opacity: 0.85;
+}
+
+/* Те саме для другого шару (світліші вікна) */
+.building::after { /* Другий шар вікон (світліші) */
+  top: 10%; /* Відступ зверху */
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 18%,
+      #fffbe6 18% 36%,
+      transparent 36% 54%,
+      #fffbe6 54% 72%,
+      transparent 72% 100%
+    ),
+    repeating-linear-gradient(
+      to right,
+      transparent 0 48%,
+      #fffbe6 48% 52%,
+      transparent 52% 100%
+    );
+  opacity: 0.4; /* Прозорість */
+  filter: brightness(1.2); /* Яскравість */
+  animation: windowsLight2 3.2s infinite alternate; /* Анімація світла */
+}
+
+.building.b2::after,
+.building.b4::after,
+.building.b6::after {
+  /* Для парних будівель повертаємо дві колонки */
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 18%,
+      #fffbe6 18% 36%,
+      transparent 36% 54%,
+      #fffbe6 54% 72%,
+      transparent 72% 100%
+    ),
+    repeating-linear-gradient(
+      to right,
+      transparent 0 48%,
+      #fffbe6 48% 52%,
+      transparent 52% 56%,
+      #fffbe6 56% 60%,
+      transparent 60% 100%
+    );
+}
+
+@keyframes windowsLight { /* Анімація світла вікон */
+  0%, 100% { opacity: 0.7; filter: brightness(0.7); }
+  50% { opacity: 1; filter: brightness(1.2); }
+}
+@keyframes windowsLight2 { /* Анімація світла вікон */
+  0%, 100% { opacity: 0.4; filter: brightness(1.2); }
+  50% { opacity: 0.7; filter: brightness(2); }
+}
+
+/* Анімації для зображення */
+@keyframes float { /* Плавання */
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes rotate { /* Обертання */
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes pulse { /* Пульсація */
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+@keyframes glow { /* Світіння */
+  0%, 100% { filter: drop-shadow(0 0 10px #c00303); }
+  50% { filter: drop-shadow(0 0 20px #ff0000); }
+}
+
+/* Адаптивність */
+@media (max-width: 600px) {
+  .container {
+    margin: 20px;
+    padding: 10px;
+    padding-bottom: 100px;
+  }
+  .robot-img {
+    width: 100px;
+  }
+  h1 { font-size: 24px; }
+  h2 { font-size: 20px; }
+  p, ul { font-size: 16px; }
+  .city-skyline { height: 100vh; }
+  .robot { width: 24px; height: 36px; bottom: 80px; }
+}
+ @keyframes window-blink {
+  0%, 100% {
+    opacity: 0.4;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes windowsLight2 { /* Анімація світла вікон */
+  0%, 100% { opacity: 0.4; filter: brightness(1.2); }
+  50% { opacity: 0.7; filter: brightness(2); }
+}
+
+/* Анімації для зображення */
+@keyframes float { /* Плавання */
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes rotate { /* Обертання */
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes pulse { /* Пульсація */
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+@keyframes glow { /* Світіння */
+  0%, 100% { filter: drop-shadow(0 0 10px #c00303); }
+  50% { filter: drop-shadow(0 0 20px #ff0000); }
+}
+
+/* Адаптивність */
+@media (max-width: 600px) { /* Для маленьких екранів */
+  .container {
+    margin: 20px; /* Менший відступ */
+    padding: 10px; /* Менший відступ */
+    padding-bottom: 100px; /* Менший відступ знизу */
+  }
+  .robot-img {
+    width: 100px; /* Менша ширина картинки */
+  }
+
+}
+  h2 { font-size: 20px; }
+  p, ul { font-size: 16px; }
+  .city-skyline { height: 100vh; }
+  .robot { width: 24px; height: 36px; bottom: 80px; }
+  
+  h1 { font-size: 24px; } /* Менший розмір заголовка */
+  h2 { font-size: 20px; } /* Менший розмір підзаголовка */
+  p, ul { font-size: 16px; } /* Менший розмір тексту */
+  .city-skyline { height: 100vh; } /* Висота міста */
+  .robot { width: 24px; height: 36px; bottom: 80px; } /* Менший робот */
+
+.hidden {
+  display: none;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+  color: #ff7d7d;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  background-color: #ddd;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.tab-button:hover {
+  background-color: #bbb;
+}
+
+.tab-button.active {
+  background-color: #2196f3;
+  color: white;
+}
+
+.tab-content {
+  display: none;
+  background-color: #22222200;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgb(0, 0, 0);
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.transformer-btn {
+  position: fixed;
+  width: 100px;
+  height: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 999;
+  animation: pop 0.4s ease-out;
+  transition: left 0.2s linear, top 0.2s linear; /* Плавний рух */
+}
+
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+.life-timer-container {
+  background-color: #0a0a0a00;
+  padding: 25px;
+  border-radius: 20px;
+  color: #000000;
+  font-family: 'Share Tech Mono', monospace;
+  text-align: center;
+  box-shadow: 0 0 20px #00fff700;
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+.life-timer-container h2 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  text-shadow: 0 0 10px #00ffcc00;
+  animation: flicker 3s infinite;
+}
+
+#lifeTimer {
+  font-size: 1.5em;
+  text-shadow: 0 0 5px #00ffcc00, 0 0 10px #00ffcc00;
+  animation: typewriter 4s steps(30) 1 normal both, blinkCaret 0.75s step-end infinite;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #00ffcc00;
+  display: inline-block;
+}
+
+/* Анімація пульсації */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 10px #00fff700;
+  }
+  50% {
+    box-shadow: 0 0 30px #00fff700;
+  }
+  100% {
+    box-shadow: 0 0 10px #00fff700;
+  }
+}
+
+/* Анімація миготіння заголовка */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.4;
+  }
+}
+
+/* Анімація "написання тексту" */
+@keyframes typewriter {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blinkCaret {
+  from, to { border-color: transparent }
+  50% { border-color: #00ffcc00 }
+}
