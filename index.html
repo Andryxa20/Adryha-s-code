@@ -5,6 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Андрій — моя історія</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: linear-gradient(-45deg, #1a237e, #0d47a1, #1976d2, #1a237e);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
+      color: #fff;
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      25% { background-position: 50% 100%; }
+      50% { background-position: 100% 50%; }
+      75% { background-position: 50% 0%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .magic-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background-color: #ffffff10;
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+      transition: 0.3s;
+      z-index: 999;
+    }
+
+    .magic-button:hover {
+      background-color: #ffffff30;
+    }
+  </style>
 </head>
 <body>
 
@@ -16,14 +54,14 @@
 <div class="stars" aria-hidden="true"></div>
 <div class="robot bot2" aria-label="Робот 2"></div>
 <div class="city-skyline">
-  <div class="building b1"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
-  <div class="building b2"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
-  <div class="building b3"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
-  <div class="building b4"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
-  <div class="building b5"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
-  <div class="building b6"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
-  <div class="building b7"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
-  <div class="building b8"><div class="windows"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+  <div class="building b1"><div class="windows"><div></div><div></div></div></div>
+  <div class="building b2"><div class="windows"><div></div><div></div></div></div>
+  <div class="building b3"><div class="windows"><div></div><div></div></div></div>
+  <div class="building b4"><div class="windows"><div></div><div></div></div></div>
+  <div class="building b5"><div class="windows"><div></div><div></div></div></div>
+  <div class="building b6"><div class="windows"><div></div><div></div></div></div>
+  <div class="building b7"><div class="windows"><div></div><div></div></div></div>
+  <div class="building b8"><div class="windows"><div></div><div></div></div></div>
 </div>
 
 <div id="transformer-buttons"></div>
@@ -33,6 +71,21 @@
   <p id="lifeTimer">Завантаження...</p>
 </div>
 
+<script>
+  function toggleAudio() {
+    const audio = document.getElementById('audioPlayer');
+    const button = document.getElementById('audioBtn');
+
+    if (audio.paused) {
+      audio.play();
+      button.textContent = '⏸️ Пауза';
+    } else {
+      audio.pause();
+      button.textContent = '🔊 Послухати про мене';
+    }
+  }
+</script>
+
 <!-- Вкладки -->
 <div class="tabs">
   <button class="tab-button" onclick="openTab('about')">Про мене</button>
@@ -41,6 +94,7 @@
   <button class="tab-button" onclick="openTab('tools')">Інструменти</button>
   <button class="tab-button" onclick="openTab('future')">Моє майбутнє</button>
   <button class="tab-button" onclick="openTab('contact')">Мої досягнення</button>
+    <button class="tab-button" onclick="openTab('gallery')">Галерея</button>
 </div>
 
 <main class="container">
@@ -77,88 +131,101 @@
   <section id="future" class="tab-content">
     <h2>🤖 Моє майбутнє через 10 років</h2>
     <p>Через десятиліття я – досвідчений фронтенд-розробник, чиї сайти та веб-додатки змінюють цифровий ландшафт. Моя експертиза в HTML, CSS та JavaScript дозволила мені досягти вершин у створенні сучасних, інтуїтивних інтерфейсів, якими користуються мільйони.</p>
-
-    <p>Я спеціалізуюсь на розробці:</p>
-    <ul>
-      <li>Інтерактивних веб-додатків з використанням сучасних фреймворків</li>
-      <li>Адаптивних інтерфейсів для будь-яких пристроїв</li>
-      <li>Швидких і чистих рішень із структурованим кодом</li>
-    </ul>
-
-    <p>Щодня я:</p>
     <ul>
       <li>🔹 Пишу JavaScript-код на сучасному рівні</li>
       <li>🔹 Створюю елегантні стилі з CSS</li>
       <li>🔹 Оптимізую продуктивність сайтів</li>
       <li>🔹 Вивчаю нові технології</li>
     </ul>
-
-    <p>Моя робота — це мистецтво цифрових просторів. Моя мета — залишатися на передовій веб-технологій і творити щось прекрасне.</p>
   </section>
+
   <section id="contact" class="tab-content">
     <h2>🏆 Мої досягнення</h2>
     <p>Я створив свій перший сайт, навчився основам HTML і CSS, а також почав вивчати JavaScript. Моїм головним досягненням стало створення цього сайту.</p>
     <p>Я також отримав досвід роботи з GitHub, де зберігаю свої проекти. Ще я трохи навчився використовувати командний рядок.</p>
   </section>
 
+  <section id="gallery" class="tab-content">
+  <h2>🤖 Галерея трансформерів</h2>
+  <div class="gallery">
+  <img src="morda1.jpg" alt="Трансформери лого" class="square-img zoomable" onclick="openModal(this.src)">
+  <img src="335988_poster_1726425352.jpg" alt="Трансформери постер" class="zoomable" onclick="openModal(this.src)">
+  <img src="a35354bc18673e12b62d9554347f52.jpg" alt="Трансформери герої" class="zoomable" onclick="openModal(this.src)">
+</div>
 
-  <div style="text-align: center; margin-top: 40px;">
-    <img src="bumblebee.png" alt="Бамблбі" class="robot-img">
+<!-- Модальне вікно для перегляду фото -->
+<div id="modal" class="modal" onclick="closeModal()">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="modalImage">
+</div>
+  </section>
+
+ <div style="text-align: center; margin-top: 40px;">
+  <img src="bumblebee.png" alt="Бамблбі" class="robot-img">
+  <div style="margin-top: 10px;">
     <button id="sayHiBtn" class="say-hi-btn">Сказати привіт</button>
+    <button id="audioBtn" onclick="toggleAudio()" class="say-hi-btn">🔊 Послухати про мене</button>
+    <audio id="audioPlayer" src="24 июл., 21.17​.aac"></audio>
   </div>
-</main>
+</div>
 
-<script src="script.js"></script>
 <script>
-  setInterval(spawnSmartTransformer, 15000);
-
-  document.addEventListener("mousemove", (e) => {
-    const buttons = document.querySelectorAll(".transformer-btn");
-    buttons.forEach(button => {
-      let rect = button.getBoundingClientRect();
-      let centerX = rect.left + rect.width / 2;
-      let centerY = rect.top + rect.height / 2;
-      let distX = e.clientX - centerX;
-      let distY = e.clientY - centerY;
-      let distance = Math.sqrt(distX ** 2 + distY ** 2);
-
-      if (distance < 200) {
-        let dx = -distX / distance;
-        let dy = -distY / distance;
-        button.style.left = `${centerX + dx * 100}px`;
-        button.style.top = `${centerY + dy * 100}px`;
+  function changeBackground() {
+    const gradients = [
+      {
+        gradient: "linear-gradient(-45deg, #ff0055, #6600ff, #00ccff, #00ff88)",
+        size: "200% 200%",
+        duration: "8s"
+      },
+      {
+        gradient: "linear-gradient(-45deg, #ff6f00, #ff8f00, #ffa000, #ff6f00)",
+        size: "300% 300%",
+        duration: "10s"
+      },
+      {
+        gradient: "linear-gradient(-45deg, #1a237e, #0d47a1, #1976d2, #1a237e)",
+        size: "400% 400%",
+        duration: "15s"
+      },
+      {
+        gradient: "linear-gradient(-45deg, #8e24aa, #d81b60, #e53935, #8e24aa)",
+        size: "250% 250%",
+        duration: "12s"
+      },
+      {
+        gradient: "linear-gradient(-45deg, #00bcd4, #009688, #4caf50, #00bcd4)",
+        size: "350% 350%",
+        duration: "14s"
       }
-    });
-  });
-</script>
-<script>
+    ];
+
+    const random = Math.floor(Math.random() * gradients.length);
+    const selected = gradients[random];
+
+    document.body.style.background = selected.gradient;
+    document.body.style.backgroundSize = selected.size;
+    document.body.style.animation = `gradientFlow ${selected.duration} ease infinite`;
+  }
+
   function updateLifeTimer() {
     const birthDate = new Date("2011-09-29T00:00:00");
     const now = new Date();
-
-    // Отримуємо різницю в мілісекундах
     let diff = now.getTime() - birthDate.getTime();
+    let lifeDate = new Date(diff);
 
-    // Створюємо тимчасову дату з цією різницею
-    const lifeDate = new Date(diff);
-
-    // Рахуємо точні роки
     let years = now.getFullYear() - birthDate.getFullYear();
     let months = now.getMonth() - birthDate.getMonth();
     let days = now.getDate() - birthDate.getDate();
 
-    // Коригуємо, якщо день народження ще не настав
     if (now < new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate())) {
       years--;
       months += 12;
     }
-
     if (days < 0) {
       months--;
-      const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate(); // днів у минулому місяці
+      const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
       days += prevMonth;
     }
-
     if (months < 0) {
       months += 12;
     }
@@ -173,6 +240,33 @@
 
   setInterval(updateLifeTimer, 1000);
   updateLifeTimer();
+</script>
+<script
+  function toggleAudio() 
+    const audio = document.getElementById('audioPlayer');
+    const button = document.getElementById('audioBtn');
+
+    if (audio.paused) {
+      audio.play();
+      button.textContent = '⏸️ Пауза';
+    } else {
+      audio.pause();
+      button.textContent = '🔊 Послухати про мене';
+    }
+  </script>
+  
+</script>
+<script src="script.js"></script>
+
+<script>
+  function openModal(src) {
+    document.getElementById("modal").style.display = "block";
+    document.getElementById("modalImage").src = src;
+  }
+
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
 </script>
 
 </body>

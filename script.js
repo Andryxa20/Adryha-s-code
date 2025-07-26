@@ -7,17 +7,6 @@ document.addEventListener('DOMContentLoaded', function() { // Коли стор�
   }
 });
 
-function changeBackground() {
-  // Генеруємо випадковий колір
-  const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-
-  // Застосовуємо як фон сайту
-  document.body.style.backgroundColor = randomColor;
-
-  // Показуємо повідомлення
-  alert('✨ Магія спрацювала! Новий фон: ' + randomColor);
-}
-
 function spawnSmartTransformer() {
   const button = document.createElement("button");
   button.className = "transformer-btn";
