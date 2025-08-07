@@ -600,7 +600,14 @@ const achievements = [
   { id: 'music_lover', name: 'Меломан', description: 'Прослухав аудіо 5 разів', icon: '🎵', unlocked: false },
   { id: 'tool_collector', name: 'Збирач інструментів', description: 'Розблокував 3 інструменти', icon: '🛠️', unlocked: false },
   { id: 'tech_master', name: 'Майстер технологій', description: 'Розблокував 6 інструментів', icon: '⚙️', unlocked: false },
-  { id: 'dev_professional', name: 'Професіонал розробки', description: 'Розблокував всі інструменти', icon: '👨‍💻', unlocked: false }
+  { id: 'dev_professional', name: 'Професіонал розробки', description: 'Розблокував всі інструменти', icon: '👨‍💻', unlocked: false },
+  { id: 'skill_enthusiast', name: 'Ентузіаст навичок', description: 'Сумарний рівень навичок досяг 10', icon: '📈', unlocked: false },
+  { id: 'html_master', name: 'HTML майстер', description: 'Досяг 5 рівня HTML', icon: '🌐', unlocked: false },
+  { id: 'css_master', name: 'CSS майстер', description: 'Досяг 5 рівня CSS', icon: '🎨', unlocked: false },
+  { id: 'js_master', name: 'JavaScript майстер', description: 'Досяг 5 рівня JavaScript', icon: '⚡', unlocked: false },
+  { id: 'python_master', name: 'Python майстер', description: 'Досяг 5 рівня Python', icon: '🐍', unlocked: false },
+  { id: 'ai_master', name: 'ШІ майстер', description: 'Досяг 5 рівня AI/ML', icon: '🤖', unlocked: false },
+  { id: 'skill_completionist', name: 'Майстер всіх навичок', description: 'Досяг максимального рівня всіх навичок', icon: '🏆', unlocked: false }
 ];
 
 // Функція використання інструменту
@@ -905,11 +912,26 @@ function makeChoice(action) {
       break;
   }
 
-  // Застосування змін
+  // Застосування змін з урахуванням бонусів навичок
+  const skillBonuses = getSkillBonuses();
+  
   Object.keys(changes).forEach(stat => {
-    gameState[stat] = Math.max(0, Math.min(100, gameState[stat] + changes[stat]));
+    let value = changes[stat];
+    
+    // Застосовуємо мультиплікатори від навичок
+    if (stat === 'knowledge' && value > 0) {
+      value = Math.floor(value * skillBonuses.knowledgeMultiplier);
+    } else if (stat === 'focus' && value > 0) {
+      value = Math.floor(value * skillBonuses.focusMultiplier);
+    } else if (stat === 'discipline' && value > 0) {
+      value = Math.floor(value * skillBonuses.disciplineMultiplier);
+    }
+    
+    gameState[stat] = Math.max(0, Math.min(100, gameState[stat] + value));
   });
 
+  // Застосовуємо мультиплікатор досвіду від навичок
+  experience = Math.floor(experience * skillBonuses.experienceMultiplier);
   gameState.experience += experience;
   gameState.day++;
 
@@ -1013,6 +1035,27 @@ function checkAchievements() {
         case 'dev_professional':
           shouldUnlock = gameState.tools.length >= 9;
           break;
+        case 'skill_enthusiast':
+          shouldUnlock = Object.values(gameState.skills).reduce((sum, level) => sum + level, 0) >= 10;
+          break;
+        case 'html_master':
+          shouldUnlock = gameState.skills.html >= 5;
+          break;
+        case 'css_master':
+          shouldUnlock = gameState.skills.css >= 5;
+          break;
+        case 'js_master':
+          shouldUnlock = gameState.skills.javascript >= 5;
+          break;
+        case 'python_master':
+          shouldUnlock = gameState.skills.python >= 5;
+          break;
+        case 'ai_master':
+          shouldUnlock = gameState.skills.ai >= 5;
+          break;
+        case 'skill_completionist':
+          shouldUnlock = Object.values(gameState.skills).every(level => level >= 5);
+          break;
       }
       
       if (shouldUnlock) {
@@ -1046,11 +1089,11 @@ function updateAchievementDisplay() {
 function updateSkills() {
   // Логіка розблокування навичок
   const skillThresholds = {
-    html: { knowledge: 25, level: 2 },
-    css: { knowledge: 40, level: 3 },
-    javascript: { knowledge: 60, level: 4 },
-    python: { knowledge: 50, level: 4 },
-    ai: { knowledge: 80, level: 6 }
+    html: { knowledge: 25, level: 2, cost: 30 },
+    css: { knowledge: 40, level: 3, cost: 40 },
+    javascript: { knowledge: 60, level: 4, cost: 60 },
+    python: { knowledge: 50, level: 4, cost: 50 },
+    ai: { knowledge: 80, level: 6, cost: 80 }
   };
   
   Object.keys(skillThresholds).forEach(skill => {
@@ -1061,14 +1104,151 @@ function updateSkills() {
       skillEl.classList.remove('locked');
       skillEl.classList.add('unlocked');
       
-      // Автоматичне покращення навичок
-      if (gameState.knowledge >= threshold.knowledge + 20) {
-        gameState.skills[skill] = Math.min(5, gameState.skills[skill] + 1);
+      // Додаємо кнопку покращення якщо навичка не максимальна
+      if (gameState.skills[skill] < 5) {
+        let upgradeBtn = skillEl.querySelector('.upgrade-skill-btn');
+        if (!upgradeBtn) {
+          upgradeBtn = document.createElement('button');
+          upgradeBtn.className = 'upgrade-skill-btn';
+          upgradeBtn.onclick = () => upgradeSkill(skill);
+          skillEl.appendChild(upgradeBtn);
+        }
+        
+        const upgradeCost = threshold.cost * (gameState.skills[skill] + 1);
+        upgradeBtn.textContent = `⬆️ ${upgradeCost} XP`;
+        upgradeBtn.disabled = gameState.experience < upgradeCost;
+      } else {
+        // Видаляємо кнопку якщо навичка максимальна
+        const upgradeBtn = skillEl.querySelector('.upgrade-skill-btn');
+        if (upgradeBtn) upgradeBtn.remove();
       }
+    } else {
+      // Показуємо вимоги для розблокування
+      let reqEl = skillEl.querySelector('.skill-requirement');
+      if (!reqEl) {
+        reqEl = document.createElement('div');
+        reqEl.className = 'skill-requirement';
+        skillEl.appendChild(reqEl);
+      }
+      reqEl.textContent = `Потрібно: ${threshold.knowledge} знань, ${threshold.level} рівень`;
     }
     
     skillEl.querySelector('.skill-level').textContent = `${gameState.skills[skill]}/5`;
   });
+}
+
+// Покращення навички
+function upgradeSkill(skillName) {
+  const skillThresholds = {
+    html: { knowledge: 25, level: 2, cost: 30 },
+    css: { knowledge: 40, level: 3, cost: 40 },
+    javascript: { knowledge: 60, level: 4, cost: 60 },
+    python: { knowledge: 50, level: 4, cost: 50 },
+    ai: { knowledge: 80, level: 6, cost: 80 }
+  };
+  
+  const skill = skillThresholds[skillName];
+  if (!skill) return;
+  
+  const currentLevel = gameState.skills[skillName];
+  if (currentLevel >= 5) {
+    showNotification('🚫 Навичка вже на максимальному рівні!', 'warning');
+    return;
+  }
+  
+  const upgradeCost = skill.cost * (currentLevel + 1);
+  if (gameState.experience < upgradeCost) {
+    showNotification(`❌ Недостатньо досвіду! Потрібно ${upgradeCost} XP`, 'warning');
+    return;
+  }
+  
+  // Покращуємо навичку
+  gameState.experience -= upgradeCost;
+  gameState.skills[skillName]++;
+  
+  // Додаємо бонуси за покращення навички
+  const skillBonuses = {
+    html: { knowledge: 2, focus: 1 },
+    css: { knowledge: 2, discipline: 1 },
+    javascript: { knowledge: 3, focus: 2 },
+    python: { knowledge: 4, discipline: 1 },
+    ai: { knowledge: 5, focus: 3 }
+  };
+  
+  const bonus = skillBonuses[skillName];
+  if (bonus) {
+    Object.keys(bonus).forEach(stat => {
+      gameState[stat] = Math.max(0, Math.min(100, gameState[stat] + bonus[stat]));
+    });
+  }
+  
+  const skillIcons = {
+    html: '🌐',
+    css: '🎨', 
+    javascript: '⚡',
+    python: '🐍',
+    ai: '🤖'
+  };
+  
+  showNotification(`${skillIcons[skillName]} Покращено навичку ${skillName.toUpperCase()} до рівня ${gameState.skills[skillName]}!`, 'achievement');
+  
+  // Додаємо анімацію покращення
+  const skillEl = document.getElementById(`skill-${skillName}`);
+  skillEl.classList.add('upgrading');
+  setTimeout(() => {
+    skillEl.classList.remove('upgrading');
+  }, 500);
+  
+  // Перевіряємо спеціальні досягнення
+  checkSkillAchievements();
+  
+  updateUI();
+}
+
+// Перевірка досягнень за навички
+function checkSkillAchievements() {
+  const totalSkillLevel = Object.values(gameState.skills).reduce((sum, level) => sum + level, 0);
+  
+  // Додаткові досягнення можна додати тут
+  if (totalSkillLevel >= 10 && !achievements.find(a => a.id === 'skill_enthusiast' && a.unlocked)) {
+    const achievement = achievements.find(a => a.id === 'skill_enthusiast');
+    if (achievement) {
+      achievement.unlocked = true;
+      gameState.achievements.push('skill_enthusiast');
+      showNotification(`🏆 Нове досягнення: ${achievement.name}!`, 'achievement');
+      updateAchievementDisplay();
+    }
+  }
+}
+
+// Отримання пасивних бонусів від навичок
+function getSkillBonuses() {
+  let bonuses = {
+    knowledgeMultiplier: 1,
+    focusMultiplier: 1,
+    disciplineMultiplier: 1,
+    experienceMultiplier: 1
+  };
+  
+  // HTML дає бонус до фокусу
+  bonuses.focusMultiplier += gameState.skills.html * 0.05;
+  
+  // CSS дає бонус до дисципліни  
+  bonuses.disciplineMultiplier += gameState.skills.css * 0.05;
+  
+  // JavaScript дає бонус до знань
+  bonuses.knowledgeMultiplier += gameState.skills.javascript * 0.1;
+  
+  // Python дає бонус до досвіду
+  bonuses.experienceMultiplier += gameState.skills.python * 0.1;
+  
+  // AI дає бонус до всього
+  const aiLevel = gameState.skills.ai;
+  bonuses.knowledgeMultiplier += aiLevel * 0.15;
+  bonuses.focusMultiplier += aiLevel * 0.1;
+  bonuses.disciplineMultiplier += aiLevel * 0.1;
+  
+  return bonuses;
 }
 
 function checkLevelUp() {
