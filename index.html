@@ -269,27 +269,27 @@
       <div class="skills-panel">
         <h3>🛠️ Навички</h3>
         <div class="skill-tree" id="skill-tree">
-          <div class="skill-item locked" id="skill-html">
+          <div class="skill-item locked" id="skill-html" data-tooltip="HTML навичка. Розблокується при 25 знаннях та 2 рівні. Кожне покращення коштує 30×рівень досвіду.">
             <span class="skill-icon">🌐</span>
             <span class="skill-name">HTML</span>
             <span class="skill-level">0/5</span>
           </div>
-          <div class="skill-item locked" id="skill-css">
+          <div class="skill-item locked" id="skill-css" data-tooltip="CSS навичка. Розблокується при 40 знаннях та 3 рівні. Кожне покращення коштує 40×рівень досвіду.">
             <span class="skill-icon">🎨</span>
             <span class="skill-name">CSS</span>
             <span class="skill-level">0/5</span>
           </div>
-          <div class="skill-item locked" id="skill-js">
+          <div class="skill-item locked" id="skill-js" data-tooltip="JavaScript навичка. Розблокується при 60 знаннях та 4 рівні. Кожне покращення коштує 60×рівень досвіду.">
             <span class="skill-icon">⚡</span>
             <span class="skill-name">JavaScript</span>
             <span class="skill-level">0/5</span>
           </div>
-          <div class="skill-item locked" id="skill-python">
+          <div class="skill-item locked" id="skill-python" data-tooltip="Python навичка. Розблокується при 50 знаннях та 4 рівні. Кожне покращення коштує 50×рівень досвіду.">
             <span class="skill-icon">🐍</span>
             <span class="skill-name">Python</span>
             <span class="skill-level">0/5</span>
           </div>
-          <div class="skill-item locked" id="skill-ai">
+          <div class="skill-item locked" id="skill-ai" data-tooltip="AI/ML навичка. Розблокується при 80 знаннях та 6 рівні. Кожне покращення коштує 80×рівень досвіду.">
             <span class="skill-icon">🤖</span>
             <span class="skill-name">AI/ML</span>
             <span class="skill-level">0/5</span>
@@ -326,6 +326,18 @@
             <li><strong>🎯 Фокус:</strong> Збільшує ефективність навчання</li>
             <li><strong>⚡ Енергія:</strong> Потрібна для виконання дій</li>
           </ul>
+        </div>
+        
+        <div class="rules-section">
+          <h3>🛠️ Система навичок</h3>
+          <ol>
+            <li><strong>Розблокування:</strong> Кожна навичка має свої вимоги (знання + рівень)</li>
+            <li><strong>Покращення:</strong> Після розблокування з'являється кнопка "⬆️ XP"</li>
+            <li><strong>Натисни на кнопку:</strong> Витрати досвід для підвищення рівня навички</li>
+            <li><strong>Пасивні бонуси:</strong> Навички дають постійні бонуси до статистик</li>
+            <li><strong>Максимум:</strong> Кожна навичка може досягти 5 рівня</li>
+          </ol>
+          <p><strong>💡 Підказка:</strong> Наведіть курсор на навички для детальної інформації!</p>
         </div>
         
         <div class="rules-section">
@@ -1183,6 +1195,13 @@ function updateSkills() {
   Object.keys(skillThresholds).forEach(skill => {
     const threshold = skillThresholds[skill];
     const skillEl = document.getElementById(`skill-${skill}`);
+    if (!skillEl) return;
+    
+    // Очищаємо попередні елементи
+    const oldBtn = skillEl.querySelector('.upgrade-skill-btn');
+    const oldReq = skillEl.querySelector('.skill-requirement');
+    if (oldBtn) oldBtn.remove();
+    if (oldReq) oldReq.remove();
     
     if (gameState.knowledge >= threshold.knowledge && gameState.level >= threshold.level) {
       skillEl.classList.remove('locked');
@@ -1190,34 +1209,110 @@ function updateSkills() {
       
       // Додаємо кнопку покращення якщо навичка не максимальна
       if (gameState.skills[skill] < 5) {
-        let upgradeBtn = skillEl.querySelector('.upgrade-skill-btn');
-        if (!upgradeBtn) {
-          upgradeBtn = document.createElement('button');
-          upgradeBtn.className = 'upgrade-skill-btn';
-          upgradeBtn.onclick = () => upgradeSkill(skill);
-          skillEl.appendChild(upgradeBtn);
+        const upgradeBtn = document.createElement('button');
+        upgradeBtn.className = 'upgrade-skill-btn';
+        upgradeBtn.onclick = () => upgradeSkill(skill);
+        
+        const currentLevel = gameState.skills[skill];
+        const upgradeCost = threshold.cost * (currentLevel + 1);
+        
+        upgradeBtn.innerHTML = `
+          <span class="upgrade-icon">⬆️</span>
+          <span class="upgrade-cost">${upgradeCost} XP</span>
+        `;
+        
+        // Додаємо підказку до кнопки
+        upgradeBtn.setAttribute('data-tooltip', 
+          `Покращити ${skill.toUpperCase()} до рівня ${currentLevel + 1}. ` +
+          `Коштує ${upgradeCost} досвіду. ` +
+          `Дає бонуси до статистик та пасивні ефекти.`
+        );
+        
+        upgradeBtn.disabled = gameState.experience < upgradeCost;
+        
+        if (gameState.experience >= upgradeCost) {
+          upgradeBtn.classList.add('can-upgrade');
+          upgradeBtn.style.animation = 'skillGlow 2s infinite';
+        } else {
+          upgradeBtn.classList.add('cannot-upgrade');
         }
         
-        const upgradeCost = threshold.cost * (gameState.skills[skill] + 1);
-        upgradeBtn.textContent = `⬆️ ${upgradeCost} XP`;
-        upgradeBtn.disabled = gameState.experience < upgradeCost;
+        // Додаємо обробники підказок
+        upgradeBtn.addEventListener('mouseenter', showTooltipForElement);
+        upgradeBtn.addEventListener('mouseleave', hideTooltipForElement);
+        upgradeBtn.addEventListener('mousemove', moveTooltipForElement);
+        
+        skillEl.appendChild(upgradeBtn);
       } else {
-        // Видаляємо кнопку якщо навичка максимальна
-        const upgradeBtn = skillEl.querySelector('.upgrade-skill-btn');
-        if (upgradeBtn) upgradeBtn.remove();
+        // Показуємо що навичка максимальна
+        const maxEl = document.createElement('div');
+        maxEl.className = 'skill-maxed';
+        maxEl.innerHTML = '🏆 МАКС';
+        maxEl.setAttribute('data-tooltip', `${skill.toUpperCase()} досягла максимального рівня! Ви отримуєте всі бонуси.`);
+        
+        maxEl.addEventListener('mouseenter', showTooltipForElement);
+        maxEl.addEventListener('mouseleave', hideTooltipForElement);
+        maxEl.addEventListener('mousemove', moveTooltipForElement);
+        
+        skillEl.appendChild(maxEl);
       }
     } else {
       // Показуємо вимоги для розблокування
-      let reqEl = skillEl.querySelector('.skill-requirement');
-      if (!reqEl) {
-        reqEl = document.createElement('div');
-        reqEl.className = 'skill-requirement';
-        skillEl.appendChild(reqEl);
-      }
-      reqEl.textContent = `Потрібно: ${threshold.knowledge} знань, ${threshold.level} рівень`;
+      skillEl.classList.remove('unlocked');
+      skillEl.classList.add('locked');
+      
+      const reqEl = document.createElement('div');
+      reqEl.className = 'skill-requirement';
+      reqEl.innerHTML = `
+        <div class="req-text">🔒 Заблоковано</div>
+        <div class="req-details">
+          Потрібно: ${threshold.knowledge} знань<br>
+          Рівень: ${threshold.level}
+        </div>
+      `;
+      
+      reqEl.setAttribute('data-tooltip', 
+        `Для розблокування ${skill.toUpperCase()} потрібно досягти ${threshold.knowledge} знань та ${threshold.level} рівня. ` +
+        `Після розблокування ви зможете покращувати навичку за досвід.`
+      );
+      
+      reqEl.addEventListener('mouseenter', showTooltipForElement);
+      reqEl.addEventListener('mouseleave', hideTooltipForElement);
+      reqEl.addEventListener('mousemove', moveTooltipForElement);
+      
+      skillEl.appendChild(reqEl);
     }
     
-    skillEl.querySelector('.skill-level').textContent = `${gameState.skills[skill]}/5`;
+    // Оновлюємо рівень навички
+    const levelEl = skillEl.querySelector('.skill-level');
+    if (levelEl) {
+      levelEl.textContent = `${gameState.skills[skill]}/5`;
+      
+      // Додаємо індикатор прогресу
+      const progress = (gameState.skills[skill] / 5) * 100;
+      levelEl.style.background = `linear-gradient(to right, #4caf50 ${progress}%, transparent ${progress}%)`;
+    }
+    
+    // Додаємо загальну підказку до самої навички
+    if (!skillEl.getAttribute('data-tooltip')) {
+      const skillNames = {
+        html: 'HTML',
+        css: 'CSS', 
+        javascript: 'JavaScript',
+        python: 'Python',
+        ai: 'AI/ML'
+      };
+      
+      skillEl.setAttribute('data-tooltip', 
+        `${skillNames[skill]} навичка (рівень ${gameState.skills[skill]}/5). ` +
+        `Дає пасивні бонуси та відкриває нові можливості.`
+      );
+    }
+    
+    // Додаємо обробники підказок до навички
+    skillEl.addEventListener('mouseenter', showTooltipForElement);
+    skillEl.addEventListener('mouseleave', hideTooltipForElement);
+    skillEl.addEventListener('mousemove', moveTooltipForElement);
   });
 }
 
@@ -1373,6 +1468,16 @@ document.addEventListener('DOMContentLoaded', function() {
   initializeTooltips();
   initializeInteractiveElements();
   showNotification('🌟 Гра почалася! Натисніть "Правила гри" для детальної інформації!', 'success');
+  
+  // Додаткове повідомлення про навички через 3 секунди
+  setTimeout(() => {
+    showNotification('💡 Підказка: Набирайте знання та досвід, щоб розблокувати навички програмування!', 'info');
+  }, 3000);
+  
+  // Ще одне повідомлення про інтерактивність через 6 секунд
+  setTimeout(() => {
+    showNotification('🖱️ Наводьте курсор на елементи для підказок та взаємодійте з усім на сторінці!', 'info');
+  }, 6000);
 });
 
 // Ініціалізація підказок
