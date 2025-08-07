@@ -209,9 +209,10 @@
           <span id="level-value" class="level-display">1</span>
         </div>
         
-        <div class="stat-item" data-tooltip="Досвід використовується для покращення навичок та автоматично підвищує рівень.">
+        <div class="stat-item" data-tooltip="Досвід використовується для покращення навичок та автоматично підвищує рівень. Кликайте на зелені кнопки ⬆️ під навичками!">
           <span class="stat-label">💰 Досвід:</span>
           <span id="experience-value">0 XP</span>
+          <div class="xp-usage-hint">👆 Клікай ⬆️ під навичками!</div>
         </div>
       </div>
 
@@ -268,6 +269,9 @@
       <!-- Інвентар/Навички -->
       <div class="skills-panel">
         <h3>🛠️ Навички</h3>
+        <div class="skills-instructions">
+          💡 <strong>Як витрачати досвід:</strong> Розблокуйте навички, потім клікайте зелені кнопки <span class="highlight-button">⬆️ XP</span>
+        </div>
         <div class="skill-tree" id="skill-tree">
           <div class="skill-item locked" id="skill-html" data-tooltip="HTML навичка. Розблокується при 25 знаннях та 2 рівні. Кожне покращення коштує 30×рівень досвіду.">
             <span class="skill-icon">🌐</span>
@@ -992,7 +996,12 @@ function makeChoice(action) {
 
   // Застосовуємо мультиплікатор досвіду від навичок
   experience = Math.floor(experience * skillBonuses.experienceMultiplier);
+  const oldExperience = gameState.experience;
   gameState.experience += experience;
+  
+  // Перевіряємо, чи вперше з'явилась можливість покращити навичку
+  checkForFirstUpgradeOpportunity(oldExperience, gameState.experience);
+
   gameState.day++;
 
   // Показ повідомлення
@@ -1231,7 +1240,8 @@ function updateSkills() {
         <div class="req-text">🔒 Заблоковано</div>
         <div class="req-details">
           Потрібно: ${threshold.knowledge} знань<br>
-          Рівень: ${threshold.level}
+          Рівень: ${threshold.level}<br>
+          <small>💡 Виконуйте дії у грі для розблокування!</small>
         </div>
       `;
       
@@ -1394,6 +1404,32 @@ function getSkillBonuses() {
   return bonuses;
 }
 
+// Перевірка можливості першого покращення навички
+function checkForFirstUpgradeOpportunity(oldExp, newExp) {
+  const skillThresholds = {
+    html: { knowledge: 25, level: 2, cost: 30 },
+    css: { knowledge: 40, level: 3, cost: 40 },
+    javascript: { knowledge: 60, level: 4, cost: 60 },
+    python: { knowledge: 50, level: 4, cost: 50 },
+    ai: { knowledge: 80, level: 6, cost: 80 }
+  };
+  
+  Object.keys(skillThresholds).forEach(skill => {
+    const threshold = skillThresholds[skill];
+    const upgradeCost = threshold.cost * (gameState.skills[skill] + 1);
+    
+    // Перевіряємо чи навичка розблокована і чи вперше стало достатньо досвіду
+    if (gameState.knowledge >= threshold.knowledge && 
+        gameState.level >= threshold.level &&
+        gameState.skills[skill] < 5 &&
+        oldExp < upgradeCost && 
+        newExp >= upgradeCost) {
+      
+      showNotification(`🎉 Тепер ви можете покращити ${skill.toUpperCase()}! Клікніть зелену кнопку ⬆️ під навичкою!`, 'achievement');
+    }
+  });
+}
+
 function checkLevelUp() {
   if (gameState.experience >= gameState.experienceToNext) {
     gameState.level++;
@@ -1438,10 +1474,15 @@ document.addEventListener('DOMContentLoaded', function() {
     showNotification('💡 Підказка: Набирайте знання та досвід, щоб розблокувати навички програмування!', 'info');
   }, 3000);
   
-  // Ще одне повідомлення про інтерактивність через 6 секунд
+  // Повідомлення про використання досвіду через 6 секунд
+  setTimeout(() => {
+    showNotification('💰 Як витрачати досвід: розблокуйте навички, потім клікайте зелені кнопки ⬆️ XP!', 'info');
+  }, 6000);
+  
+  // Ще одне повідомлення про інтерактивність через 9 секунд
   setTimeout(() => {
     showNotification('🖱️ Наводьте курсор на елементи для підказок та взаємодійте з усім на сторінці!', 'info');
-  }, 6000);
+  }, 9000);
 });
 
 // Ініціалізація підказок

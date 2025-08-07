@@ -1736,3 +1736,47 @@ h1 {
 .skill-item.unlocked[data-tooltip]:hover {
   background: rgba(76, 175, 80, 0.15);
 }
+
+/* Инструкции по использованию опыта */
+.xp-usage-hint {
+  font-size: 11px;
+  color: #4caf50;
+  margin-top: 2px;
+  font-weight: bold;
+  animation: pulseGreen 2s infinite;
+}
+
+@keyframes pulseGreen {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.skills-instructions {
+  background: rgba(76, 175, 80, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border-left: 4px solid #4caf50;
+  font-size: 14px;
+  text-align: center;
+}
+
+.highlight-button {
+  background: #4caf50;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  animation: buttonGlow 2s infinite;
+}
+
+@keyframes buttonGlow {
+  0%, 100% { box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(76, 175, 80, 0.8); }
+}
+
+/* Улучшенные подсказки для заблокированных навичок */
+.skill-requirement .req-details small {
+  color: #81c784;
+  font-style: italic;
+}
