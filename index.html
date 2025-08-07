@@ -26,11 +26,11 @@
 </head>
 <body>
 
-<button class="magic-button" onclick="changeBackground()">
+<button class="magic-button" onclick="changeBackground()" data-tooltip="🪄 Кнопка магії! Змінює фон та дає +5 енергії, +3 фокусу (кулдаун 5 сек)">
   🪄 Натисни для магії!
 </button>
 
-<img src="earth.png" alt="Земля" class="planet-earth" onclick="showAlien()">
+<img src="earth.png" alt="Земля" class="planet-earth" onclick="showAlien()" data-tooltip="🌍 Планета Земля! Споглядання космосу дає +3 знання, +2 фокусу (кулдаун 8 сек)">
 <div class="stars" aria-hidden="true"></div>
 <div class="robot bot2" aria-label="Робот 2"></div>
 <div class="city-skyline">
@@ -159,11 +159,20 @@
   <!-- НОВА ІГРОВА СЕКЦІЯ -->
   <section id="game" class="tab-content">
     <h2>🎮 Гра: "Шлях Андрія до успіху"</h2>
+    
+    <!-- Панель управління грою -->
+    <div class="game-controls">
+      <button class="control-btn" onclick="showGameRules()">📖 Правила гри</button>
+      <button class="control-btn" onclick="showGameStats()">📊 Детальна статистика</button>
+      <button class="control-btn" onclick="resetGame()">🔄 Почати спочатку</button>
+      <button class="control-btn" onclick="toggleSounds()">🔊 Звуки</button>
+    </div>
+    
     <div class="game-container">
       
       <!-- Панель статистики гравця -->
       <div class="player-stats">
-        <div class="stat-item">
+        <div class="stat-item" data-tooltip="Знання допомагають розблоковувати навички та інструменти. Збільшується через навчання та кодування.">
           <span class="stat-label">🧠 Знання:</span>
           <div class="stat-bar">
             <div class="stat-progress" id="knowledge-bar" style="width: 10%"></div>
@@ -171,7 +180,7 @@
           <span id="knowledge-value">10/100</span>
         </div>
         
-        <div class="stat-item">
+        <div class="stat-item" data-tooltip="Дисципліна допомагає виконувати складні завдання та витримувати навантаження. Зростає через спорт та медитацію.">
           <span class="stat-label">💪 Дисципліна:</span>
           <div class="stat-bar">
             <div class="stat-progress" id="discipline-bar" style="width: 15%"></div>
@@ -179,7 +188,7 @@
           <span id="discipline-value">15/100</span>
         </div>
         
-        <div class="stat-item">
+        <div class="stat-item" data-tooltip="Фокус підвищує ефективність навчання та дозволяє краще концентруватися на завданнях.">
           <span class="stat-label">🎯 Фокус:</span>
           <div class="stat-bar">
             <div class="stat-progress" id="focus-bar" style="width: 20%"></div>
@@ -187,7 +196,7 @@
           <span id="focus-value">20/100</span>
         </div>
         
-        <div class="stat-item">
+        <div class="stat-item" data-tooltip="Енергія потрібна для виконання більшості дій. Відновлюється через відпочинок та деякі активності.">
           <span class="stat-label">⚡ Енергія:</span>
           <div class="stat-bar">
             <div class="stat-progress energy" id="energy-bar" style="width: 80%"></div>
@@ -195,12 +204,12 @@
           <span id="energy-value">80/100</span>
         </div>
         
-        <div class="stat-item">
+        <div class="stat-item" data-tooltip="Ваш поточний рівень. Підвищується при накопиченні достатньої кількості досвіду.">
           <span class="stat-label">🏆 Рівень:</span>
           <span id="level-value" class="level-display">1</span>
         </div>
         
-        <div class="stat-item">
+        <div class="stat-item" data-tooltip="Досвід використовується для покращення навичок та автоматично підвищує рівень.">
           <span class="stat-label">💰 Досвід:</span>
           <span id="experience-value">0 XP</span>
         </div>
@@ -221,22 +230,22 @@
 
         <!-- Вибори/Дії -->
         <div class="game-choices" id="game-choices">
-          <button class="choice-btn" onclick="makeChoice('study')">
+          <button class="choice-btn" onclick="makeChoice('study')" data-tooltip="Вивчай програмування! +8 знань, -15 енергії, +15 досвіду">
             📚 Вивчати програмування (+знання, -енергія)
           </button>
-          <button class="choice-btn" onclick="makeChoice('exercise')">
+          <button class="choice-btn" onclick="makeChoice('exercise')" data-tooltip="Займайся спортом! +6 дисципліни, +10 енергії, +12 досвіду">
             🏃‍♂️ Займатися спортом (+дисципліна, +енергія)
           </button>
-          <button class="choice-btn" onclick="makeChoice('meditate')">
+          <button class="choice-btn" onclick="makeChoice('meditate')" data-tooltip="Медитуй для концентрації! +8 фокусу, +5 енергії, +10 досвіду">
             🧘‍♂️ Медитувати (+фокус, +енергія)
           </button>
-          <button class="choice-btn" onclick="makeChoice('code')">
+          <button class="choice-btn" onclick="makeChoice('code')" data-tooltip="Пиши код! Потрібно 30+ знань. +12 знань, +6 фокусу, -20 енергії, +25 досвіду">
             💻 Писати код (+знання, +фокус, -енергія)
           </button>
-          <button class="choice-btn" onclick="makeChoice('rest')">
+          <button class="choice-btn" onclick="makeChoice('rest')" data-tooltip="Відпочивай та відновлюйся! +30 енергії, +5 досвіду">
             😴 Відпочивати (+енергія)
           </button>
-          <button class="choice-btn" onclick="makeChoice('socialize')">
+          <button class="choice-btn" onclick="makeChoice('socialize')" data-tooltip="Спілкуйся з однодумцями! +4 фокусу, -5 енергії, +8 досвіду">
             👥 Спілкуватися з однодумцями (+фокус)
           </button>
         </div>
@@ -296,13 +305,88 @@
 
     <!-- Ігрові повідомлення -->
     <div class="game-notifications" id="game-notifications"></div>
+    
+    <!-- Модальні вікна -->
+    <!-- Правила гри -->
+    <div id="game-rules-modal" class="game-modal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('game-rules-modal')">&times;</span>
+        <h2>📖 Правила гри "Шлях Андрія до успіху"</h2>
+        
+        <div class="rules-section">
+          <h3>🎯 Мета гри</h3>
+          <p>Розвинути свої навички програмування від новачка до професіонала ШІ!</p>
+        </div>
+        
+        <div class="rules-section">
+          <h3>📊 Статистики</h3>
+          <ul>
+            <li><strong>🧠 Знання:</strong> Впливає на розблокування навичок та інструментів</li>
+            <li><strong>💪 Дисципліна:</strong> Допомагає витримувати важкі завдання</li>
+            <li><strong>🎯 Фокус:</strong> Збільшує ефективність навчання</li>
+            <li><strong>⚡ Енергія:</strong> Потрібна для виконання дій</li>
+          </ul>
+        </div>
+        
+        <div class="rules-section">
+          <h3>🎮 Як грати</h3>
+          <ol>
+            <li>Вибирайте дії в ігровому меню</li>
+            <li>Взаємодійте з елементами на сторінці для бонусів</li>
+            <li>Розвивайте навички, витрачаючи досвід</li>
+            <li>Розблоковуйте інструменти та вкладки</li>
+            <li>Здобувайте досягнення</li>
+          </ol>
+        </div>
+        
+        <div class="rules-section">
+          <h3>✨ Інтерактивні елементи</h3>
+          <ul>
+            <li>🪄 <strong>Кнопка магії:</strong> +5 енергії, +3 фокусу (кулдаун 5 сек)</li>
+            <li>🌍 <strong>Планета Земля:</strong> +3 знання, +2 фокусу (кулдаун 8 сек)</li>
+            <li>🎵 <strong>Аудіо:</strong> +8 енергії, +2 дисципліни (кулдаун 15 сек)</li>
+            <li>🤖 <strong>Трансформери:</strong> +50 досвіду, +5 знань, +10 фокусу</li>
+          </ul>
+        </div>
+        
+        <div class="rules-section">
+          <h3>🏆 Досягнення</h3>
+          <p>Виконуйте різні завдання для отримання досягнень та додаткових бонусів!</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Статистика -->
+    <div id="game-stats-modal" class="game-modal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('game-stats-modal')">&times;</span>
+        <h2>📊 Детальна статистика</h2>
+        <div id="detailed-stats-content">
+          <!-- Контент буде заповнений JavaScript -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Підтвердження скидання -->
+    <div id="reset-confirm-modal" class="game-modal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('reset-confirm-modal')">&times;</span>
+        <h2>🔄 Підтвердження скидання</h2>
+        <p>Ви впевнені, що хочете почати гру спочатку?</p>
+        <p><strong>Увага:</strong> Весь прогрес буде втрачено!</p>
+        <div class="modal-buttons">
+          <button class="confirm-btn" onclick="confirmReset()">Так, скинути</button>
+          <button class="cancel-btn" onclick="closeModal('reset-confirm-modal')">Скасувати</button>
+        </div>
+      </div>
+    </div>
   </section>
 
  <div style="text-align: center; margin-top: 40px;">
-  <img src="bumblebee.png" alt="Бамблбі" class="robot-img">
+  <img src="bumblebee.png" alt="Бамблбі" class="robot-img" data-tooltip="🤖 Це Бамблбі - твій друг-трансформер!">
   <div style="margin-top: 10px;">
-    <button id="sayHiBtn" class="say-hi-btn">Сказати привіт</button>
-    <button id="audioBtn" onclick="toggleAudio()" class="say-hi-btn">🔊 Послухати про мене</button>
+    <button id="sayHiBtn" class="say-hi-btn" data-tooltip="👋 Привітайся з Бамблбі! Отримай мотивацію та енергію!">Сказати привіт</button>
+    <button id="audioBtn" onclick="toggleAudio()" class="say-hi-btn" data-tooltip="🎵 Послухай розповідь Андрія про себе! +8 енергії, +2 дисципліни">🔊 Послухати про мене</button>
     <audio id="audioPlayer" src="24 июл., 21.17​.aac"></audio>
   </div>
 </div>
@@ -1286,8 +1370,236 @@ document.addEventListener('DOMContentLoaded', function() {
   updateTabVisibility();
   updateToolsDisplay();
   updateToolsTabContent();
-  showNotification('🌟 Гра почалася! Взаємодій з елементами сторінки для отримання бонусів!', 'success');
+  initializeTooltips();
+  initializeInteractiveElements();
+  showNotification('🌟 Гра почалася! Натисніть "Правила гри" для детальної інформації!', 'success');
 });
+
+// Ініціалізація підказок
+function initializeTooltips() {
+  // Створення елементу для підказок
+  const tooltip = document.createElement('div');
+  tooltip.id = 'game-tooltip';
+  tooltip.className = 'game-tooltip';
+  document.body.appendChild(tooltip);
+  
+  // Додавання обробників для всіх елементів з data-tooltip
+  document.querySelectorAll('[data-tooltip]').forEach(element => {
+    element.addEventListener('mouseenter', showTooltip);
+    element.addEventListener('mouseleave', hideTooltip);
+    element.addEventListener('mousemove', moveTooltip);
+  });
+}
+
+function showTooltip(e) {
+  const tooltip = document.getElementById('game-tooltip');
+  const text = e.target.getAttribute('data-tooltip') || e.target.closest('[data-tooltip]')?.getAttribute('data-tooltip');
+  
+  if (text) {
+    tooltip.textContent = text;
+    tooltip.style.display = 'block';
+    tooltip.style.opacity = '1';
+  }
+}
+
+function hideTooltip() {
+  const tooltip = document.getElementById('game-tooltip');
+  tooltip.style.opacity = '0';
+  setTimeout(() => {
+    tooltip.style.display = 'none';
+  }, 200);
+}
+
+function moveTooltip(e) {
+  const tooltip = document.getElementById('game-tooltip');
+  tooltip.style.left = (e.pageX + 10) + 'px';
+  tooltip.style.top = (e.pageY - 30) + 'px';
+}
+
+// Ініціалізація інтерактивних елементів
+function initializeInteractiveElements() {
+  // Додавання підказок до основних елементів сторінки
+  const magicButton = document.querySelector('.magic-button');
+  if (magicButton) {
+    magicButton.setAttribute('data-tooltip', '🪄 Кнопка магії: +5 енергії, +3 фокусу (кулдаун 5 сек)');
+    magicButton.addEventListener('mouseenter', showTooltip);
+    magicButton.addEventListener('mouseleave', hideTooltip);
+    magicButton.addEventListener('mousemove', moveTooltip);
+  }
+  
+  const earthImg = document.querySelector('.planet-earth');
+  if (earthImg) {
+    earthImg.setAttribute('data-tooltip', '🌍 Планета Земля: +3 знання, +2 фокусу (кулдаун 8 сек)');
+    earthImg.addEventListener('mouseenter', showTooltip);
+    earthImg.addEventListener('mouseleave', hideTooltip);
+    earthImg.addEventListener('mousemove', moveTooltip);
+  }
+  
+  const audioBtn = document.getElementById('audioBtn');
+  if (audioBtn) {
+    audioBtn.setAttribute('data-tooltip', '🎵 Аудіо: +8 енергії, +2 дисципліни (кулдаун 15 сек)');
+    audioBtn.addEventListener('mouseenter', showTooltip);
+    audioBtn.addEventListener('mouseleave', hideTooltip);
+    audioBtn.addEventListener('mousemove', moveTooltip);
+  }
+}
+
+// Модальні вікна
+function showGameRules() {
+  document.getElementById('game-rules-modal').style.display = 'flex';
+}
+
+function showGameStats() {
+  updateDetailedStats();
+  document.getElementById('game-stats-modal').style.display = 'flex';
+}
+
+function resetGame() {
+  document.getElementById('reset-confirm-modal').style.display = 'flex';
+}
+
+function confirmReset() {
+  // Скидання стану гри
+  gameState = {
+    level: 1,
+    experience: 0,
+    experienceToNext: 100,
+    knowledge: 10,
+    discipline: 15,
+    focus: 20,
+    energy: 80,
+    day: 1,
+    achievements: [],
+    skills: {
+      html: 0,
+      css: 0,
+      javascript: 0,
+      python: 0,
+      ai: 0
+    },
+    tools: [],
+    unlockedTabs: ['about'],
+    transformersCaught: 0,
+    magicButtonUsed: 0,
+    earthClicked: 0,
+    audioListened: 0
+  };
+  
+  // Скидання розблокованих інструментів
+  Object.keys(gameTools).forEach(toolId => {
+    gameTools[toolId].unlocked = false;
+  });
+  
+  // Скидання досягнень
+  achievements.forEach(achievement => {
+    achievement.unlocked = false;
+  });
+  
+  updateUI();
+  updateTabVisibility();
+  updateToolsDisplay();
+  updateToolsTabContent();
+  
+  closeModal('reset-confirm-modal');
+  showNotification('🔄 Гру скинуто! Починаємо спочатку!', 'info');
+}
+
+function toggleSounds() {
+  // Тут можна додати логіку для увімкнення/вимкнення звуків
+  showNotification('🔊 Звукові ефекти будуть додані в наступних оновленнях!', 'info');
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).style.display = 'none';
+}
+
+function updateDetailedStats() {
+  const skillBonuses = getSkillBonuses();
+  const totalSkillPoints = Object.values(gameState.skills).reduce((sum, level) => sum + level, 0);
+  const unlockedToolsCount = gameState.tools.length;
+  const totalAchievements = achievements.filter(a => a.unlocked).length;
+  
+  const content = `
+    <div class="stats-grid">
+      <div class="stat-category">
+        <h3>📊 Основна статистика</h3>
+        <p><strong>Рівень:</strong> ${gameState.level}</p>
+        <p><strong>Досвід:</strong> ${gameState.experience} XP</p>
+        <p><strong>До наступного рівня:</strong> ${gameState.experienceToNext - gameState.experience} XP</p>
+        <p><strong>Днів у грі:</strong> ${gameState.day}</p>
+      </div>
+      
+      <div class="stat-category">
+        <h3>🛠️ Навички та інструменти</h3>
+        <p><strong>Загалом очок навичок:</strong> ${totalSkillPoints}/25</p>
+        <p><strong>HTML:</strong> ${gameState.skills.html}/5</p>
+        <p><strong>CSS:</strong> ${gameState.skills.css}/5</p>
+        <p><strong>JavaScript:</strong> ${gameState.skills.javascript}/5</p>
+        <p><strong>Python:</strong> ${gameState.skills.python}/5</p>
+        <p><strong>AI/ML:</strong> ${gameState.skills.ai}/5</p>
+        <p><strong>Розблоковано інструментів:</strong> ${unlockedToolsCount}/9</p>
+      </div>
+      
+      <div class="stat-category">
+        <h3>🏆 Досягнення та бонуси</h3>
+        <p><strong>Розблоковано досягнень:</strong> ${totalAchievements}/${achievements.length}</p>
+        <p><strong>Бонус до знань:</strong> +${Math.round((skillBonuses.knowledgeMultiplier - 1) * 100)}%</p>
+        <p><strong>Бонус до фокусу:</strong> +${Math.round((skillBonuses.focusMultiplier - 1) * 100)}%</p>
+        <p><strong>Бонус до дисципліни:</strong> +${Math.round((skillBonuses.disciplineMultiplier - 1) * 100)}%</p>
+        <p><strong>Бонус до досвіду:</strong> +${Math.round((skillBonuses.experienceMultiplier - 1) * 100)}%</p>
+      </div>
+      
+      <div class="stat-category">
+        <h3>🎮 Інтерактивність</h3>
+        <p><strong>Використання кнопки магії:</strong> ${gameState.magicButtonUsed}</p>
+        <p><strong>Кліки по Землі:</strong> ${gameState.earthClicked}</p>
+        <p><strong>Прослуховування аудіо:</strong> ${gameState.audioListened}</p>
+        <p><strong>Зловлено трансформерів:</strong> ${gameState.transformersCaught}</p>
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('detailed-stats-content').innerHTML = content;
+}
+
+// Покращені уведомлення
+function showNotification(message, type = 'info') {
+  const notifications = document.getElementById('game-notifications');
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  
+  // Додавання іконки в залежності від типу
+  const icons = {
+    'success': '✅',
+    'warning': '⚠️',
+    'error': '❌',
+    'info': 'ℹ️',
+    'achievement': '🏆'
+  };
+  
+  notification.innerHTML = `
+    <span class="notification-icon">${icons[type] || 'ℹ️'}</span>
+    <span class="notification-text">${message}</span>
+    <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+  `;
+  
+  notifications.appendChild(notification);
+  
+  // Анімація появи
+  setTimeout(() => {
+    notification.classList.add('show');
+  }, 10);
+  
+  // Автоматичне видалення через 5 секунд
+  setTimeout(() => {
+    notification.classList.add('fade-out');
+    setTimeout(() => {
+      if (notification.parentElement) {
+        notification.remove();
+      }
+    }, 300);
+  }, 5000);
+}
 </script>
 
 </body>
