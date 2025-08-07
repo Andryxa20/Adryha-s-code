@@ -94,7 +94,8 @@
   <button class="tab-button" onclick="openTab('tools')">Інструменти</button>
   <button class="tab-button" onclick="openTab('future')">Моє майбутнє</button>
   <button class="tab-button" onclick="openTab('contact')">Мої досягнення</button>
-    <button class="tab-button" onclick="openTab('gallery')">Галерея</button>
+  <button class="tab-button" onclick="openTab('gallery')">Галерея</button>
+  <button class="tab-button" onclick="openTab('game')">🎮 Гра Андрія</button>
 </div>
 
 <main class="container">
@@ -173,6 +174,148 @@
   <span class="close">&times;</span>
   <img class="modal-content" id="modalImage">
 </div>
+  </section>
+
+  <!-- НОВА ІГРОВА СЕКЦІЯ -->
+  <section id="game" class="tab-content">
+    <h2>🎮 Гра: "Шлях Андрія до успіху"</h2>
+    <div class="game-container">
+      
+      <!-- Панель статистики гравця -->
+      <div class="player-stats">
+        <div class="stat-item">
+          <span class="stat-label">🧠 Знання:</span>
+          <div class="stat-bar">
+            <div class="stat-progress" id="knowledge-bar" style="width: 10%"></div>
+          </div>
+          <span id="knowledge-value">10/100</span>
+        </div>
+        
+        <div class="stat-item">
+          <span class="stat-label">💪 Дисципліна:</span>
+          <div class="stat-bar">
+            <div class="stat-progress" id="discipline-bar" style="width: 15%"></div>
+          </div>
+          <span id="discipline-value">15/100</span>
+        </div>
+        
+        <div class="stat-item">
+          <span class="stat-label">🎯 Фокус:</span>
+          <div class="stat-bar">
+            <div class="stat-progress" id="focus-bar" style="width: 20%"></div>
+          </div>
+          <span id="focus-value">20/100</span>
+        </div>
+        
+        <div class="stat-item">
+          <span class="stat-label">⚡ Енергія:</span>
+          <div class="stat-bar">
+            <div class="stat-progress energy" id="energy-bar" style="width: 80%"></div>
+          </div>
+          <span id="energy-value">80/100</span>
+        </div>
+        
+        <div class="stat-item">
+          <span class="stat-label">🏆 Рівень:</span>
+          <span id="level-value" class="level-display">1</span>
+        </div>
+        
+        <div class="stat-item">
+          <span class="stat-label">💰 Досвід:</span>
+          <span id="experience-value">0 XP</span>
+        </div>
+      </div>
+
+      <!-- Основна ігрова область -->
+      <div class="game-main">
+        <div class="game-character">
+          <div class="andrey-avatar">🧑‍💻</div>
+          <p>Андрій (Рівень <span id="character-level">1</span>)</p>
+        </div>
+
+        <div class="game-story" id="game-story">
+          <p>🌟 Добро пожалувати у світ Андрія! 
+          <br>Ти — 13-річний майбутній програміст, який мріє створювати нейромережі та штучний інтелект.</p>
+          <p>Твоя мета: розвинути свої навички та стати професіоналом у сфері ІТ!</p>
+        </div>
+
+        <!-- Вибори/Дії -->
+        <div class="game-choices" id="game-choices">
+          <button class="choice-btn" onclick="makeChoice('study')">
+            📚 Вивчати програмування (+знання, -енергія)
+          </button>
+          <button class="choice-btn" onclick="makeChoice('exercise')">
+            🏃‍♂️ Займатися спортом (+дисципліна, +енергія)
+          </button>
+          <button class="choice-btn" onclick="makeChoice('meditate')">
+            🧘‍♂️ Медитувати (+фокус, +енергія)
+          </button>
+          <button class="choice-btn" onclick="makeChoice('code')">
+            💻 Писати код (+знання, +фокус, -енергія)
+          </button>
+          <button class="choice-btn" onclick="makeChoice('rest')">
+            😴 Відпочивати (+енергія)
+          </button>
+          <button class="choice-btn" onclick="makeChoice('socialize')">
+            👥 Спілкуватися з однодумцями (+фокус)
+          </button>
+        </div>
+
+        <!-- Спеціальні челенджі -->
+        <div class="special-challenges" id="special-challenges" style="display: none;">
+          <h3>🔥 Спеціальний челендж!</h3>
+          <div id="challenge-content"></div>
+        </div>
+
+        <!-- Досягнення -->
+        <div class="achievements" id="achievements">
+          <h3>🏆 Досягнення</h3>
+          <div class="achievement-list" id="achievement-list">
+            <!-- Досягнення будуть додаватися динамічно -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Інвентар/Навички -->
+      <div class="skills-panel">
+        <h3>🛠️ Навички</h3>
+        <div class="skill-tree" id="skill-tree">
+          <div class="skill-item locked" id="skill-html">
+            <span class="skill-icon">🌐</span>
+            <span class="skill-name">HTML</span>
+            <span class="skill-level">0/5</span>
+          </div>
+          <div class="skill-item locked" id="skill-css">
+            <span class="skill-icon">🎨</span>
+            <span class="skill-name">CSS</span>
+            <span class="skill-level">0/5</span>
+          </div>
+          <div class="skill-item locked" id="skill-js">
+            <span class="skill-icon">⚡</span>
+            <span class="skill-name">JavaScript</span>
+            <span class="skill-level">0/5</span>
+          </div>
+          <div class="skill-item locked" id="skill-python">
+            <span class="skill-icon">🐍</span>
+            <span class="skill-name">Python</span>
+            <span class="skill-level">0/5</span>
+          </div>
+          <div class="skill-item locked" id="skill-ai">
+            <span class="skill-icon">🤖</span>
+            <span class="skill-name">AI/ML</span>
+            <span class="skill-level">0/5</span>
+          </div>
+        </div>
+
+        <h3>🎒 Інструменти</h3>
+        <div class="tools-inventory" id="tools-inventory">
+          <!-- Інструменти будуть розблоковуватися -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Ігрові повідомлення -->
+    <div class="game-notifications" id="game-notifications"></div>
   </section>
 
  <div style="text-align: center; margin-top: 40px;">
@@ -256,8 +399,8 @@
   setInterval(updateLifeTimer, 1000);
   updateLifeTimer();
 </script>
-<script
-  function toggleAudio() 
+<script>
+  function toggleAudio() {
     const audio = document.getElementById('audioPlayer');
     const button = document.getElementById('audioBtn');
 
@@ -268,8 +411,7 @@
       audio.pause();
       button.textContent = '🔊 Послухати про мене';
     }
-  </script>
-  
+  }
 </script>
 <script src="script.js"></script>
 
@@ -282,6 +424,301 @@
   function closeModal() {
     document.getElementById("modal").style.display = "none";
   }
+</script>
+
+<!-- ІГРОВА ЛОГІКА -->
+<script>
+// Ігрові дані
+let gameState = {
+  level: 1,
+  experience: 0,
+  experienceToNext: 100,
+  knowledge: 10,
+  discipline: 15,
+  focus: 20,
+  energy: 80,
+  day: 1,
+  achievements: [],
+  skills: {
+    html: 0,
+    css: 0,
+    javascript: 0,
+    python: 0,
+    ai: 0
+  },
+  tools: []
+};
+
+// Досягнення
+const achievements = [
+  { id: 'first_study', name: 'Перший крок', description: 'Почав вивчати програмування', icon: '📚', unlocked: false },
+  { id: 'discipline_master', name: 'Майстер дисципліни', description: 'Досяг 50 дисципліни', icon: '💪', unlocked: false },
+  { id: 'knowledge_seeker', name: 'Шукач знань', description: 'Досяг 50 знань', icon: '🧠', unlocked: false },
+  { id: 'focus_master', name: 'Майстер фокусу', description: 'Досяг 50 фокусу', icon: '🎯', unlocked: false },
+  { id: 'first_skill', name: 'Перша навичка', description: 'Розблокував першу навичку', icon: '⭐', unlocked: false },
+  { id: 'level_5', name: 'Юний програміст', description: 'Досяг 5 рівня', icon: '🚀', unlocked: false },
+  { id: 'ai_apprentice', name: 'Учень ШІ', description: 'Почав вивчати штучний інтелект', icon: '🤖', unlocked: false }
+];
+
+// Оновлення інтерфейсу
+function updateUI() {
+  // Оновлення статистик
+  updateStat('knowledge', gameState.knowledge);
+  updateStat('discipline', gameState.discipline);
+  updateStat('focus', gameState.focus);
+  updateStat('energy', gameState.energy);
+  
+  document.getElementById('level-value').textContent = gameState.level;
+  document.getElementById('character-level').textContent = gameState.level;
+  document.getElementById('experience-value').textContent = gameState.experience + ' XP';
+  
+  // Перевірка досягнень
+  checkAchievements();
+  
+  // Оновлення навичок
+  updateSkills();
+  
+  // Перевірка рівня
+  checkLevelUp();
+}
+
+function updateStat(statName, value) {
+  const maxValue = 100;
+  const percentage = Math.min((value / maxValue) * 100, 100);
+  
+  document.getElementById(`${statName}-bar`).style.width = percentage + '%';
+  document.getElementById(`${statName}-value`).textContent = `${value}/${maxValue}`;
+}
+
+function makeChoice(action) {
+  if (gameState.energy <= 0) {
+    showNotification('😴 Ти занадто втомлений! Відпочинь спочатку.', 'warning');
+    return;
+  }
+
+  let changes = {};
+  let message = '';
+  let experience = 10;
+
+  switch(action) {
+    case 'study':
+      changes = { knowledge: 8, energy: -15 };
+      message = '📚 Ти провів час за вивченням програмування! Знання збільшилися.';
+      experience = 15;
+      break;
+    
+    case 'exercise':
+      changes = { discipline: 6, energy: 10 };
+      message = '🏃‍♂️ Фізичні вправи зміцнили твою дисципліну та підняли енергію!';
+      experience = 12;
+      break;
+    
+    case 'meditate':
+      changes = { focus: 8, energy: 5 };
+      message = '🧘‍♂️ Медитація допомогла тобі зосередитися та відновити енергію.';
+      experience = 10;
+      break;
+    
+    case 'code':
+      if (gameState.knowledge < 30) {
+        showNotification('🤔 Тобі потрібно більше знань перед написанням серйозного коду!', 'warning');
+        return;
+      }
+      changes = { knowledge: 12, focus: 6, energy: -20 };
+      message = '💻 Ти написав гарний код! Твої навички покращилися.';
+      experience = 25;
+      break;
+    
+    case 'rest':
+      changes = { energy: 30 };
+      message = '😴 Хороший відпочинок відновив твою енергію!';
+      experience = 5;
+      break;
+    
+    case 'socialize':
+      changes = { focus: 4, energy: -5 };
+      message = '👥 Спілкування з однодумцями надихнуло тебе!';
+      experience = 8;
+      break;
+  }
+
+  // Застосування змін
+  Object.keys(changes).forEach(stat => {
+    gameState[stat] = Math.max(0, Math.min(100, gameState[stat] + changes[stat]));
+  });
+
+  gameState.experience += experience;
+  gameState.day++;
+
+  // Показ повідомлення
+  showNotification(message, 'success');
+  
+  // Оновлення інтерфейсу
+  updateUI();
+  
+  // Генерація випадкових подій
+  if (Math.random() < 0.2) {
+    generateRandomEvent();
+  }
+}
+
+function generateRandomEvent() {
+  const events = [
+    {
+      text: '🎉 Ти знайшов корисний туторіал в Інтернеті!',
+      effect: { knowledge: 5 },
+      type: 'success'
+    },
+    {
+      text: '☕ Випив каву та відчув прилив енергії!',
+      effect: { energy: 10 },
+      type: 'success'
+    },
+    {
+      text: '📱 Відволікся на телефон і втратив фокус.',
+      effect: { focus: -3, energy: -5 },
+      type: 'warning'
+    },
+    {
+      text: '🎮 Знайшов час для улюбленої гри - відновив енергію!',
+      effect: { energy: 8 },
+      type: 'info'
+    },
+    {
+      text: '🤝 Зустрів досвідченого програміста, який дав пораду!',
+      effect: { knowledge: 7, focus: 3 },
+      type: 'success'
+    }
+  ];
+
+  const event = events[Math.floor(Math.random() * events.length)];
+  
+  Object.keys(event.effect).forEach(stat => {
+    gameState[stat] = Math.max(0, Math.min(100, gameState[stat] + event.effect[stat]));
+  });
+
+  showNotification(event.text, event.type);
+  updateUI();
+}
+
+function checkAchievements() {
+  achievements.forEach(achievement => {
+    if (!achievement.unlocked) {
+      let shouldUnlock = false;
+      
+      switch(achievement.id) {
+        case 'first_study':
+          shouldUnlock = gameState.knowledge >= 20;
+          break;
+        case 'discipline_master':
+          shouldUnlock = gameState.discipline >= 50;
+          break;
+        case 'knowledge_seeker':
+          shouldUnlock = gameState.knowledge >= 50;
+          break;
+        case 'focus_master':
+          shouldUnlock = gameState.focus >= 50;
+          break;
+        case 'first_skill':
+          shouldUnlock = Object.values(gameState.skills).some(level => level > 0);
+          break;
+        case 'level_5':
+          shouldUnlock = gameState.level >= 5;
+          break;
+        case 'ai_apprentice':
+          shouldUnlock = gameState.skills.ai > 0;
+          break;
+      }
+      
+      if (shouldUnlock) {
+        achievement.unlocked = true;
+        gameState.achievements.push(achievement.id);
+        showNotification(`🏆 Нове досягнення: ${achievement.name}!`, 'achievement');
+        updateAchievementDisplay();
+      }
+    }
+  });
+}
+
+function updateAchievementDisplay() {
+  const achievementList = document.getElementById('achievement-list');
+  achievementList.innerHTML = '';
+  
+  achievements.filter(a => a.unlocked).forEach(achievement => {
+    const achievementEl = document.createElement('div');
+    achievementEl.className = 'achievement-item';
+    achievementEl.innerHTML = `
+      <span class="achievement-icon">${achievement.icon}</span>
+      <div class="achievement-info">
+        <div class="achievement-name">${achievement.name}</div>
+        <div class="achievement-desc">${achievement.description}</div>
+      </div>
+    `;
+    achievementList.appendChild(achievementEl);
+  });
+}
+
+function updateSkills() {
+  // Логіка розблокування навичок
+  const skillThresholds = {
+    html: { knowledge: 25, level: 2 },
+    css: { knowledge: 40, level: 3 },
+    javascript: { knowledge: 60, level: 4 },
+    python: { knowledge: 50, level: 4 },
+    ai: { knowledge: 80, level: 6 }
+  };
+  
+  Object.keys(skillThresholds).forEach(skill => {
+    const threshold = skillThresholds[skill];
+    const skillEl = document.getElementById(`skill-${skill}`);
+    
+    if (gameState.knowledge >= threshold.knowledge && gameState.level >= threshold.level) {
+      skillEl.classList.remove('locked');
+      skillEl.classList.add('unlocked');
+      
+      // Автоматичне покращення навичок
+      if (gameState.knowledge >= threshold.knowledge + 20) {
+        gameState.skills[skill] = Math.min(5, gameState.skills[skill] + 1);
+      }
+    }
+    
+    skillEl.querySelector('.skill-level').textContent = `${gameState.skills[skill]}/5`;
+  });
+}
+
+function checkLevelUp() {
+  if (gameState.experience >= gameState.experienceToNext) {
+    gameState.level++;
+    gameState.experience -= gameState.experienceToNext;
+    gameState.experienceToNext = Math.floor(gameState.experienceToNext * 1.5);
+    
+    showNotification(`🎉 Вітаємо! Ти досяг ${gameState.level} рівня!`, 'achievement');
+    
+    // Бонуси за рівень
+    gameState.energy = Math.min(100, gameState.energy + 20);
+    updateUI();
+  }
+}
+
+function showNotification(message, type = 'info') {
+  const notifications = document.getElementById('game-notifications');
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.textContent = message;
+  
+  notifications.appendChild(notification);
+  
+  // Видалення повідомлення через 3 секунди
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}
+
+// Ініціалізація гри
+document.addEventListener('DOMContentLoaded', function() {
+  updateUI();
+  showNotification('🌟 Гра почалася! Удачі на шляху до успіху!', 'success');
+});
 </script>
 
 </body>
