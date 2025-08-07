@@ -517,6 +517,101 @@ h1 {
   animation: xpGlow 1s infinite;
 }
 
+/* Стилі для інструментів у грі */
+.tool-item {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  border: 2px solid #00ffe1;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px 0;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.tool-item.locked {
+  opacity: 0.5;
+  border-color: #666;
+}
+
+.tool-item.unlocked {
+  border-color: #00ffe1;
+  box-shadow: 0 0 10px rgba(0, 255, 225, 0.3);
+}
+
+.tool-icon {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.tool-name {
+  font-weight: bold;
+  color: #00ffe1;
+  margin-bottom: 5px;
+}
+
+.use-tool-btn {
+  background: linear-gradient(90deg, #00ffe1, #0066cc);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.use-tool-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #00ffe1;
+}
+
+.tool-requirement {
+  font-size: 10px;
+  color: #999;
+  margin-top: 5px;
+}
+
+/* Стилі для вкладки інструментів */
+.tool-unlocked {
+  color: #00ffe1;
+  position: relative;
+  padding-left: 10px;
+}
+
+.tool-locked {
+  color: #666;
+  position: relative;
+  padding-left: 10px;
+}
+
+.status-unlocked {
+  color: #00ff88;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.status-locked {
+  color: #ff6666;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.tool-unlocked::before {
+  content: "✓";
+  position: absolute;
+  left: -15px;
+  color: #00ff88;
+  font-weight: bold;
+}
+
+.tool-locked::before {
+  content: "🔒";
+  position: absolute;
+  left: -20px;
+  font-size: 12px;
+}
+
 .tabs {
   display: flex;
   justify-content: center;
