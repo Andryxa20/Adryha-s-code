@@ -543,7 +543,7 @@ let gameState = {
     ai: 0
   },
   tools: [],
-  unlockedTabs: ['about'], // Розблоковані вкладки
+  unlockedTabs: ['about', 'hobby', 'goals', 'tools', 'future', 'contact', 'gallery', 'game'], // Всі основні вкладки доступні
   transformersCaught: 0,
   magicButtonUsed: 0,
   earthClicked: 0,
@@ -585,15 +585,10 @@ const pageInteractions = {
   }
 };
 
-// Умови розблокування вкладок
+// Умови розблокування вкладок (всі основні вкладки доступні відразу)
 const tabUnlockConditions = {
-  'hobby': { level: 2, knowledge: 20 },
-  'goals': { level: 3, knowledge: 30 },
-  'tools': { level: 4, knowledge: 40 },
-  'future': { level: 5, knowledge: 50, discipline: 40 },
-  'contact': { level: 3, achievements: 2 },
-  'gallery': { level: 6, knowledge: 60 },
-  'game': { level: 1 } // Завжди доступна
+  // Всі вкладки тепер доступні з самого початку
+  // Умови можна використовувати для спеціальних можливостей в майбутньому
 };
 
 // Інструменти та їх властивості
@@ -836,37 +831,10 @@ function interactWithPageElement(elementType) {
   checkTabUnlocks();
 }
 
-// Перевірка розблокування вкладок
+// Перевірка розблокування вкладок (тепер всі доступні відразу)
 function checkTabUnlocks() {
-  Object.keys(tabUnlockConditions).forEach(tabId => {
-    if (!gameState.unlockedTabs.includes(tabId)) {
-      const conditions = tabUnlockConditions[tabId];
-      let canUnlock = true;
-      
-      // Перевірка всіх умов
-      Object.keys(conditions).forEach(condition => {
-        switch(condition) {
-          case 'level':
-            if (gameState.level < conditions[condition]) canUnlock = false;
-            break;
-          case 'knowledge':
-          case 'discipline':
-          case 'focus':
-            if (gameState[condition] < conditions[condition]) canUnlock = false;
-            break;
-          case 'achievements':
-            if (gameState.achievements.length < conditions[condition]) canUnlock = false;
-            break;
-        }
-      });
-      
-      if (canUnlock) {
-        gameState.unlockedTabs.push(tabId);
-        showNotification(`🔓 Розблоковано нову вкладку: ${getTabName(tabId)}!`, 'achievement');
-        updateTabVisibility();
-      }
-    }
-  });
+  // Всі вкладки тепер доступні з самого початку
+  // Ця функція може використовуватися для спеціальних можливостей в майбутньому
 }
 
 // Отримання назви вкладки
@@ -891,14 +859,10 @@ function updateTabVisibility() {
     const tabIds = ['about', 'hobby', 'goals', 'tools', 'future', 'contact', 'gallery', 'game'];
     const tabId = tabIds[index];
     
-    if (gameState.unlockedTabs.includes(tabId)) {
-      button.classList.remove('locked-tab');
-      button.disabled = false;
-    } else {
-      button.classList.add('locked-tab');
-      button.disabled = true;
-      button.title = `Розблокується на ${tabUnlockConditions[tabId]?.level || '?'} рівні`;
-    }
+    // Всі вкладки тепер доступні відразу
+    button.classList.remove('locked-tab');
+    button.disabled = false;
+    button.title = ''; // Прибираємо підказки про розблокування
   });
 }
 
@@ -1583,7 +1547,7 @@ function confirmReset() {
       ai: 0
     },
     tools: [],
-    unlockedTabs: ['about'],
+    unlockedTabs: ['about', 'hobby', 'goals', 'tools', 'future', 'contact', 'gallery', 'game'],
     transformersCaught: 0,
     magicButtonUsed: 0,
     earthClicked: 0,
