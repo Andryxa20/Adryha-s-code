@@ -29,9 +29,15 @@ function spawnSmartTransformer() {
   img.style.height = "auto";
   button.appendChild(img);
 
-  // Клік — знищення
+  // Клік — знищення + интеграция с игрой
   button.onclick = () => {
     alert("🥳Ти спіймав трансформера, ти переміг🥳!");
+    
+    // Интеграция с игрой
+    if (typeof interactWithPageElement === 'function') {
+      interactWithPageElement('transformerCatch');
+    }
+    
     clearInterval(move);
     clearInterval(slowDown);
     button.remove();

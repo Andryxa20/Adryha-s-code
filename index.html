@@ -343,6 +343,21 @@
     document.body.style.background = selected.gradient;
     document.body.style.backgroundSize = selected.size;
     document.body.style.animation = `gradientFlow ${selected.duration} ease infinite`;
+    
+    // Интеграция с игрой
+    if (typeof interactWithPageElement === 'function') {
+      interactWithPageElement('magicButton');
+    }
+  }
+
+  // Функция для показа пришельца + интеграция с игрой
+  function showAlien() {
+    alert("👽 Привіт, землянине! Я прилетів з далекої галактики!");
+    
+    // Интеграция с игрой
+    if (typeof interactWithPageElement === 'function') {
+      interactWithPageElement('earthPlanet');
+    }
   }
 
   function updateLifeTimer() {
@@ -387,6 +402,11 @@
     if (audio.paused) {
       audio.play();
       button.textContent = '⏸️ Пауза';
+      
+      // Интеграция с игрой
+      if (typeof interactWithPageElement === 'function') {
+        interactWithPageElement('audioPlayer');
+      }
     } else {
       audio.pause();
       button.textContent = '🔊 Послухати про мене';
@@ -408,7 +428,7 @@
 
 <!-- ІГРОВА ЛОГІКА -->
 <script>
-// Ігрові дані
+// Розширені ігрові дані
 let gameState = {
   level: 1,
   experience: 0,
@@ -426,7 +446,58 @@ let gameState = {
     python: 0,
     ai: 0
   },
-  tools: []
+  tools: [],
+  unlockedTabs: ['about'], // Розблоковані вкладки
+  transformersCaught: 0,
+  magicButtonUsed: 0,
+  earthClicked: 0,
+  audioListened: 0
+};
+
+// Системи взаємодії з об'єктами
+const pageInteractions = {
+  // Взаємодія з кнопкою магії
+  magicButton: {
+    bonus: { energy: 5, focus: 3 },
+    message: '🪄 Магія фону додала енергії та фокусу!',
+    cooldown: 5000,
+    lastUsed: 0
+  },
+  
+  // Взаємодія з планетою Земля
+  earthPlanet: {
+    bonus: { knowledge: 3, focus: 2 },
+    message: '🌍 Споглядання Землі розширило твій кругозір!',
+    cooldown: 8000,
+    lastUsed: 0
+  },
+  
+  // Взаємодія з аудіо
+  audioPlayer: {
+    bonus: { energy: 8, discipline: 2 },
+    message: '🎵 Музика надихнула та додала дисципліни!',
+    cooldown: 15000,
+    lastUsed: 0
+  },
+  
+  // Взаємодія з трансформерами
+  transformerCatch: {
+    bonus: { experience: 50, knowledge: 5, focus: 10 },
+    message: '🤖 Злов трансформера дав величезний досвід!',
+    cooldown: 0,
+    lastUsed: 0
+  }
+};
+
+// Умови розблокування вкладок
+const tabUnlockConditions = {
+  'hobby': { level: 2, knowledge: 20 },
+  'goals': { level: 3, knowledge: 30 },
+  'tools': { level: 4, knowledge: 40 },
+  'future': { level: 5, knowledge: 50, discipline: 40 },
+  'contact': { level: 3, achievements: 2 },
+  'gallery': { level: 6, knowledge: 60 },
+  'game': { level: 1 } // Завжди доступна
 };
 
 // Досягнення
@@ -437,8 +508,122 @@ const achievements = [
   { id: 'focus_master', name: 'Майстер фокусу', description: 'Досяг 50 фокусу', icon: '🎯', unlocked: false },
   { id: 'first_skill', name: 'Перша навичка', description: 'Розблокував першу навичку', icon: '⭐', unlocked: false },
   { id: 'level_5', name: 'Юний програміст', description: 'Досяг 5 рівня', icon: '🚀', unlocked: false },
-  { id: 'ai_apprentice', name: 'Учень ШІ', description: 'Почав вивчати штучний інтелект', icon: '🤖', unlocked: false }
+  { id: 'ai_apprentice', name: 'Учень ШІ', description: 'Почав вивчати штучний інтелект', icon: '🤖', unlocked: false },
+  { id: 'magic_master', name: 'Майстер магії', description: 'Використав кнопку магії 10 разів', icon: '🪄', unlocked: false },
+  { id: 'transformer_hunter', name: 'Мисливець за трансформерами', description: 'Зловив 5 трансформерів', icon: '🎯', unlocked: false },
+  { id: 'earth_observer', name: 'Спостерігач Землі', description: 'Клікнув на Землю 15 разів', icon: '🌍', unlocked: false },
+  { id: 'music_lover', name: 'Меломан', description: 'Прослухав аудіо 5 разів', icon: '🎵', unlocked: false }
 ];
+
+// Функція взаємодії з об'єктами сторінки
+function interactWithPageElement(elementType) {
+  const interaction = pageInteractions[elementType];
+  if (!interaction) return;
+  
+  const now = Date.now();
+  if (now - interaction.lastUsed < interaction.cooldown) {
+    const timeLeft = Math.ceil((interaction.cooldown - (now - interaction.lastUsed)) / 1000);
+    showNotification(`⏰ Зачекай ще ${timeLeft} секунд`, 'warning');
+    return;
+  }
+  
+  // Застосування бонусів
+  Object.keys(interaction.bonus).forEach(stat => {
+    if (stat === 'experience') {
+      gameState.experience += interaction.bonus[stat];
+    } else {
+      gameState[stat] = Math.max(0, Math.min(100, gameState[stat] + interaction.bonus[stat]));
+    }
+  });
+  
+  interaction.lastUsed = now;
+  
+  // Збільшення лічильників
+  switch(elementType) {
+    case 'magicButton':
+      gameState.magicButtonUsed++;
+      break;
+    case 'earthPlanet':
+      gameState.earthClicked++;
+      break;
+    case 'audioPlayer':
+      gameState.audioListened++;
+      break;
+    case 'transformerCatch':
+      gameState.transformersCaught++;
+      break;
+  }
+  
+  showNotification(interaction.message, 'success');
+  updateUI();
+  checkTabUnlocks();
+}
+
+// Перевірка розблокування вкладок
+function checkTabUnlocks() {
+  Object.keys(tabUnlockConditions).forEach(tabId => {
+    if (!gameState.unlockedTabs.includes(tabId)) {
+      const conditions = tabUnlockConditions[tabId];
+      let canUnlock = true;
+      
+      // Перевірка всіх умов
+      Object.keys(conditions).forEach(condition => {
+        switch(condition) {
+          case 'level':
+            if (gameState.level < conditions[condition]) canUnlock = false;
+            break;
+          case 'knowledge':
+          case 'discipline':
+          case 'focus':
+            if (gameState[condition] < conditions[condition]) canUnlock = false;
+            break;
+          case 'achievements':
+            if (gameState.achievements.length < conditions[condition]) canUnlock = false;
+            break;
+        }
+      });
+      
+      if (canUnlock) {
+        gameState.unlockedTabs.push(tabId);
+        showNotification(`🔓 Розблоковано нову вкладку: ${getTabName(tabId)}!`, 'achievement');
+        updateTabVisibility();
+      }
+    }
+  });
+}
+
+// Отримання назви вкладки
+function getTabName(tabId) {
+  const tabNames = {
+    'about': 'Про мене',
+    'hobby': 'Хобі',
+    'goals': 'Цілі',
+    'tools': 'Інструменти',
+    'future': 'Моє майбутнє',
+    'contact': 'Мої досягнення',
+    'gallery': 'Галерея',
+    'game': 'Гра Андрія'
+  };
+  return tabNames[tabId] || tabId;
+}
+
+// Оновлення видимості вкладок
+function updateTabVisibility() {
+  const tabButtons = document.querySelectorAll('.tab-button');
+  tabButtons.forEach((button, index) => {
+    const tabIds = ['about', 'hobby', 'goals', 'tools', 'future', 'contact', 'gallery', 'game'];
+    const tabId = tabIds[index];
+    
+    if (gameState.unlockedTabs.includes(tabId)) {
+      button.classList.remove('locked-tab');
+      button.disabled = false;
+    } else {
+      button.classList.add('locked-tab');
+      button.disabled = true;
+      button.title = `Розблокується на ${tabUnlockConditions[tabId]?.level || '?'} рівні`;
+    }
+  });
+}
 
 // Оновлення інтерфейсу
 function updateUI() {
@@ -460,6 +645,27 @@ function updateUI() {
   
   // Перевірка рівня
   checkLevelUp();
+  
+  // Оновлення інтерактивних елементів
+  updateInteractiveElements();
+}
+
+// Оновлення інтерактивних елементів
+function updateInteractiveElements() {
+  // Додавання ефектів до елементів сторінки
+  const magicButton = document.querySelector('.magic-button');
+  const earthImg = document.querySelector('.planet-earth');
+  const audioBtn = document.getElementById('audioBtn');
+  
+  // Додавання індикаторів досвіду
+  [magicButton, earthImg, audioBtn].forEach(el => {
+    if (el && !el.querySelector('.xp-indicator')) {
+      const indicator = document.createElement('div');
+      indicator.className = 'xp-indicator';
+      indicator.textContent = '+XP';
+      el.appendChild(indicator);
+    }
+  });
 }
 
 function updateStat(statName, value) {
@@ -535,6 +741,7 @@ function makeChoice(action) {
   
   // Оновлення інтерфейсу
   updateUI();
+  checkTabUnlocks();
   
   // Генерація випадкових подій
   if (Math.random() < 0.2) {
@@ -608,6 +815,18 @@ function checkAchievements() {
         case 'ai_apprentice':
           shouldUnlock = gameState.skills.ai > 0;
           break;
+        case 'magic_master':
+          shouldUnlock = gameState.magicButtonUsed >= 10;
+          break;
+        case 'transformer_hunter':
+          shouldUnlock = gameState.transformersCaught >= 5;
+          break;
+        case 'earth_observer':
+          shouldUnlock = gameState.earthClicked >= 15;
+          break;
+        case 'music_lover':
+          shouldUnlock = gameState.audioListened >= 5;
+          break;
       }
       
       if (shouldUnlock) {
@@ -677,6 +896,7 @@ function checkLevelUp() {
     // Бонуси за рівень
     gameState.energy = Math.min(100, gameState.energy + 20);
     updateUI();
+    checkTabUnlocks();
   }
 }
 
@@ -697,7 +917,8 @@ function showNotification(message, type = 'info') {
 // Ініціалізація гри
 document.addEventListener('DOMContentLoaded', function() {
   updateUI();
-  showNotification('🌟 Гра почалася! Удачі на шляху до успіху!', 'success');
+  updateTabVisibility();
+  showNotification('🌟 Гра почалася! Взаємодій з елементами сторінки для отримання бонусів!', 'success');
 });
 </script>
 
